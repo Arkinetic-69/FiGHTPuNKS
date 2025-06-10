@@ -140,4 +140,6 @@ if __name__ == '__main__':
     # Make game instance and run the game
     fp = FightPunks()
     fp.run_game()
-            
+
+# test msg
+#lalalalala
