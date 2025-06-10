@@ -20,6 +20,10 @@ class Kevin():
           self.attack_1 = False
           self.attack_2 = False
 
+          self.last_press_time = 0
+          self.double_press_window = 300 # milliseconds
+          self.double_press = False
+
           # Updates player position
           self.x = float(self.rect.x)
           #self.y = float(self.rect.y)
@@ -31,6 +35,11 @@ class Kevin():
             self.rect.x += self.settings.fighter_speed
           if self.moving_left:
             self.rect.x -= self.settings.fighter_speed
+
+          if self.dash_right:
+              self.rect.x += self.settings.fighter_dash
+          if self.dash_right:
+              self.rect.x -= self.settings.fighter_dash
 
           # Jumping
           if self.jumping:
