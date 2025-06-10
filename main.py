@@ -63,13 +63,14 @@ class FightPunks:
         """Responds to keys being pressed"""
         # Player 1 Movement
         if event.key == pygame.K_d:
-            self.current_time = self.fighter.moving_right = True
-            pygame.time.get_ticks()
+            self.fighter.moving_right = True
+            self.current_time = pygame.time.get_ticks()
+
             if self.current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
                 self.fighter.dash_right = True
-            else:
-                self.fighter.last_press_time = False
-                self.current_time = self.fighter.last_press_time
+                
+                self.fighter.last_press_time = self.current_time
+                
         elif event.key == pygame.K_a:
             self.fighter.moving_left = True
         elif event.key == pygame.K_w: # Jump control

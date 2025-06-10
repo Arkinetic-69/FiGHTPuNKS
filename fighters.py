@@ -38,8 +38,10 @@ class Kevin():
 
           if self.dash_right:
               self.rect.x += self.settings.fighter_dash
-          if self.dash_right:
+              self.dash_right = False # Resets dash
+          if self.dash_left:
               self.rect.x -= self.settings.fighter_dash
+              self.dash_left = False # Resets dash
 
           # Jumping
           if self.jumping:
