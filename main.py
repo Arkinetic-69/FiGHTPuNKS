@@ -71,7 +71,6 @@ class FightPunks:
             if self.current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
                 self.fighter.dash_right = True
                 self.fighter.last_press_time = self.current_time
-                print('Double click!')
         elif event.key == pygame.K_a:
             self.fighter.moving_left = True
             # Dash controls
@@ -79,7 +78,6 @@ class FightPunks:
             if self.current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
                 self.fighter.dash_left = True
                 self.fighter.last_press_time = self.current_time
-                print('Double click!')
         elif event.key == pygame.K_w: # Jump control
             self.fighter.jumping = True
         # Player 1 attack
