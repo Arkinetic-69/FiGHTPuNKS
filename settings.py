@@ -17,6 +17,6 @@ class Settings:
         self.fighter_vel_y = 40
         self.fighter_gravity = 5
         self.fighter_jump = 40
-        self.fighter_dash = 70
+        self.fighter_dash = 50
 
         self.fighter_atk = 0

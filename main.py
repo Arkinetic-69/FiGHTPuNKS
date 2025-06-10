@@ -54,6 +54,8 @@ class FightPunks:
                 self.check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self.check_keyup_events(event)
+
+            # Joystick events
             elif event.type == pygame.JOYBUTTONDOWN:
                 self.check_keydown_events(event)
             elif event.type == pygame.JOYBUTTONUP:
@@ -64,15 +66,20 @@ class FightPunks:
         # Player 1 Movement
         if event.key == pygame.K_d:
             self.fighter.moving_right = True
+            # Dash controls
             self.current_time = pygame.time.get_ticks()
-
             if self.current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
                 self.fighter.dash_right = True
-                
                 self.fighter.last_press_time = self.current_time
-                
+                print('Double click!')
         elif event.key == pygame.K_a:
             self.fighter.moving_left = True
+            # Dash controls
+            self.current_time = pygame.time.get_ticks()
+            if self.current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
+                self.fighter.dash_left = True
+                self.fighter.last_press_time = self.current_time
+                print('Double click!')
         elif event.key == pygame.K_w: # Jump control
             self.fighter.jumping = True
         # Player 1 attack

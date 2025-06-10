@@ -20,9 +20,9 @@ class Kevin():
           self.attack_1 = False
           self.attack_2 = False
 
+          # Dash variables
           self.last_press_time = 0
-          self.double_press_window = 300 # milliseconds
-          self.double_press = False
+          self.double_press_window = 700 # milliseconds
 
           # Updates player position
           self.x = float(self.rect.x)
@@ -36,6 +36,7 @@ class Kevin():
           if self.moving_left:
             self.rect.x -= self.settings.fighter_speed
 
+          # Dashing
           if self.dash_right:
               self.rect.x += self.settings.fighter_dash
               self.dash_right = False # Resets dash
