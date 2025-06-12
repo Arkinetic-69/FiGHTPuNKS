@@ -13,10 +13,10 @@ class Settings:
         self.bg_image = pygame.image.load('assets/images/stages/stage1.bmp')
 
         # Kevin's Settings
-        self.fighter_speed = 1
-        self.fighter_vel_y = 40
-        self.fighter_gravity = 5
-        self.fighter_jump = 40
-        self.fighter_dash = 50
+        self.fighter_speed = 5.0
+        self.fighter_vel_y = 40.0
+        self.fighter_gravity = 5.0
+        self.fighter_jump = 40.0
+        self.fighter_dash = 10.0
 
         self.fighter_atk = 0

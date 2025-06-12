@@ -67,20 +67,28 @@ class FightPunks:
         if event.key == pygame.K_d:
             self.fighter.moving_right = True
             # Dash controls
-            self.current_time = pygame.time.get_ticks()
-            if self.current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
-                self.fighter.dash_right = True
+            current_time = pygame.time.get_ticks()
+            if current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
+                if not self.fighter.is_dashing:
+                    self.fighter.dash_right = True
+                    self.fighter.is_dashing = True
+                    self.fighter.dash_start_time = current_time
                 self.fighter.last_press_time = 0
-            self.fighter.last_press_time = self.current_time
+                
+            self.fighter.last_press_time = current_time
 
         elif event.key == pygame.K_a:
             self.fighter.moving_left = True
             # Dash controls
-            self.current_time = pygame.time.get_ticks()
-            if self.current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
-                self.fighter.dash_left = True
+            current_time = pygame.time.get_ticks()
+            if current_time - self.fighter.last_press_time <= self.fighter.double_press_window:
+                if not self.fighter.is_dashing:
+                    self.fighter.dash_left = True
+                    self.fighter.is_dashing = True
+                    self.fighter.dash_start_time = current_time
                 self.fighter.last_press_time = 0
-            self.fighter.last_press_time = self.current_time
+                    
+            self.fighter.last_press_time = current_time
 
         elif event.key == pygame.K_w: # Jump control
             self.fighter.jumping = True
