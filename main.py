@@ -61,7 +61,7 @@ class FightPunks:
             elif event.type == pygame.JOYBUTTONUP:
                 self.check_keyup_events(event)
             
-    def check_keydown_events(self, event):
+    def check_keydown_events(self, event, surface):
         """Responds to keys being pressed"""
         # Player 1 Movement
         if event.key == pygame.K_d:
@@ -93,9 +93,9 @@ class FightPunks:
         elif event.key == pygame.K_w: # Jump control
             self.fighter.jumping = True
         # Player 1 attack
-        elif event.key == pygame.K_y:
+        elif event.key == pygame.K_x:
             self.fighter.attack_1 = True
-        elif event.key == pygame.K_u:
+        elif event.key == pygame.K_c:
             self.fighter.attack_2 = True
 
         # Player 2 Movement
@@ -106,11 +106,9 @@ class FightPunks:
         elif event.key == pygame.K_i: # Jump control
             self.dummy.jumping = True
         
-
         # Escape to close
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
-        
     
     def check_keyup_events(self,event):
         """Responds to keys being released"""
@@ -120,18 +118,16 @@ class FightPunks:
         elif event.key == pygame.K_a:
             self.fighter.moving_left = False
         # Player 1 attack
-        elif event.key == pygame.K_y:
+        elif event.key == pygame.K_x:
             self.fighter.attack_1 = False
-        elif event.key == pygame.K_u:
+        elif event.key == pygame.K_c:
             self.fighter.attack_2 = False
 
-        
         # Player 2 movement
         elif event.key == pygame.K_l:
             self.dummy.moving_right = False
         elif event.key == pygame.K_j:
             self.dummy.moving_left = False
-        
 
     def update_screen(self):
         """Updates images on the screen and flip to new screen"""
