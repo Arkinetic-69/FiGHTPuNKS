@@ -11,7 +11,9 @@ class Kevin():
         # Load both Kevin and his rect
         self.rect = pygame.Rect((x, y, 125, 320))
 
-        
+         # Kevin's attack hitboxes
+        self.hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
+                                  2 * self.rect.width, self.rect.height))
           
         # Start with Kevin not moving
         self.moving_right = False
@@ -76,12 +78,7 @@ class Kevin():
           
     def attack(self, surface):
         """Kevin's attacks"""
-        # Kevin's attack hitboxes
-        self.hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
-                                  2 * self.rect.width, self.rect.height))
-
-        if self.attack_1:
-            pygame.draw.rect(surface, (255, 0, 24), self.hitbox)
+        pygame.draw.rect(surface, (255, 201, 24), self.hitbox)
         
     def draw(self, surface):
         """Draws Kevin into the screen"""

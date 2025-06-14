@@ -94,7 +94,7 @@ class FightPunks:
             self.fighter.jumping = True
         # Player 1 attack
         elif event.key == pygame.K_x:
-            self.fighter.attack_1 = True
+            self.fighter.attack()
         elif event.key == pygame.K_c:
             self.fighter.attack_2 = True
 
@@ -139,6 +139,7 @@ class FightPunks:
         # Draws the fighter on the screen
         self.fighter.draw(self.screen)
         self.dummy.draw(self.screen)
+        
         
         pygame.display.flip()
 
