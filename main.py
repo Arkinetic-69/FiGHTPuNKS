@@ -139,7 +139,7 @@ class FightPunks:
         # Draws the fighter on the screen
         self.fighter.draw(self.screen)
         self.dummy.draw(self.screen)
-        
+        self.fighter.attack(self.screen)
         
         pygame.display.flip()
 
