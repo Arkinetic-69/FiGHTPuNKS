@@ -30,7 +30,7 @@ class Kevin():
         # Dash state
         self.is_dashing = False #Dash state indicator
         self.dash_start_time = 0 
-        self.dash_duration = 300 
+        self.dash_duration = 100 
 
         # Updates player position
         self.x = float(self.rect.x)
@@ -79,9 +79,10 @@ class Kevin():
         # Kevin's attack hitboxes
         self.hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
                                   2 * self.rect.width, self.rect.height))
-        pygame.draw.rect(surface, (255, 0, 24), self.hitbox)
-        
 
+        if self.attack_1:
+            pygame.draw.rect(surface, (255, 0, 24), self.hitbox)
+        
     def draw(self, surface):
         """Draws Kevin into the screen"""
         pygame.draw.rect(surface, (255, 0, 0), self.rect)

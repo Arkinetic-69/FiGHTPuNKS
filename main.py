@@ -61,7 +61,7 @@ class FightPunks:
             elif event.type == pygame.JOYBUTTONUP:
                 self.check_keyup_events(event)
             
-    def check_keydown_events(self, event, surface):
+    def check_keydown_events(self, event):
         """Responds to keys being pressed"""
         # Player 1 Movement
         if event.key == pygame.K_d:
