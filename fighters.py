@@ -1,15 +1,22 @@
 import pygame
 from settings import Settings
+from pygame.sprite import Sprite
 
-class Kevin():
+class Kevin(Sprite):
     """Initializes Kevin (Default Character)"""
     def __init__(self, x, y):
-
         """Initializes Kevin's behaviour"""
+
+        super().__init__()
         self.settings = Settings() # Calls Settings
 
         # Load both Kevin and his rect
         self.rect = pygame.Rect((x, y, 125, 320))
+
+        # Load Kevin's sprite and attributes
+        self.idle = self.settings.fighter_idle
+        self.max_index = len(self.settings.fighter_idle) - 1
+        self.current_index = self.max_index
 
          # Kevin's attack hitboxes
         #self.attack_hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
@@ -33,7 +40,7 @@ class Kevin():
 
         self.attack_1_hitbox_width = 125 #customize to your own liking
         self.attack_1_hitbox_height = 320 #customize to your own liking
-        self.attack_1_hitbox_offset_x_right = self.rect.x - 5 #customize to your own liking
+        self.attack_1_hitbox_offset_x_right = self.rect.x - 50 #customize to your own liking
         self.attack_1_hitbox_offset_x_left = -self.attack_1_hitbox_width + 5 #customize to your own liking
         self.attack_1_hitbox_offset_y = 0
         self.attack_1_hitbox_rect = pygame.Rect(0, 0, 0, 0)
@@ -42,11 +49,11 @@ class Kevin():
         self.attack_2_start_time = 0
         self.attack_2_duration = 400 # milliseconds
 
-        self.attack_2_hitbox_width = 70 #customize to your own liking
-        self.attack_2_hitbox_height = 40 #customize to your own liking
-        self.attack_2_hitbox_offset_x_right = self.rect.x - 20 #customize to your own liking
+        self.attack_2_hitbox_width = 125 #customize to your own liking
+        self.attack_2_hitbox_height = 320 #customize to your own liking
+        self.attack_2_hitbox_offset_x_right = self.rect.x - 50 #customize to your own liking
         self.attack_2_hitbox_offset_x_left = -self.attack_2_hitbox_width + 5 #customize to your own liking
-        self.attack_2_hitbox_offset_y = 320 // 3
+        self.attack_2_hitbox_offset_y = 0
         self.attack_2_hitbox_rect = pygame.Rect(0, 0, 0, 0)
 
         # Dash variables
@@ -129,6 +136,12 @@ class Kevin():
             self.rect.left = 0
         if self.rect.right > self.settings.screen_width:
             self.rect.right = self.settings.screen_width
+
+        # Sprite function
+        if self.current_index < self.max_index:
+            self.current_index += 1
+        else:
+            self.current_index = 0
           
     #def attack(self, surface):
     #   """Kevin's attacks"""
@@ -145,7 +158,7 @@ class Kevin():
         # Draw Attack 2 hitbox (for debugging)
         if self.is_attacking_2 and self.attack_2_hitbox_rect.width > 0:
             pygame.draw.rect(surface, (0, 255, 0), self.attack_2_hitbox_rect, 2) # Green outline for attack 2
-        
-        
-        
-          
+
+    def animate(self):
+        """ sprite animation """
+        pass

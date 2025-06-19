@@ -20,3 +20,9 @@ class Settings:
         self.fighter_dash = 50.0
 
         self.fighter_atk = 0
+
+        self.fighter_idle = [pygame.image.load('assets/images/fighters/kevin/idle/idle1.bmp'), 
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle2.bmp'),
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle3.bmp'),
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle4.bmp'),
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle5.bmp'),]
