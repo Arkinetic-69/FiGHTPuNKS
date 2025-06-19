@@ -92,11 +92,20 @@ class FightPunks:
 
         elif event.key == pygame.K_w: # Jump control
             self.fighter.jumping = True
+
         # Player 1 attack
         elif event.key == pygame.K_x:
-            self.fighter.attack()
+            if not self.fighter.is_attacking_1:
+                self.fighter.attack_1 = True
+                self.fighter.is_attacking_1 = True
+                self.fighter.attack_1_start_time = pygame.time.get_ticks()
+
         elif event.key == pygame.K_c:
-            self.fighter.attack_2 = True
+            if not self.fighter.is_attacking_2:
+                self.fighter.attack_2 = True
+                self.fighter.is_attacking_2 = True
+                self.fighter.attack_2_start_time = pygame.time.get_ticks()
+                
 
         # Player 2 Movement
         elif event.key == pygame.K_l:
@@ -105,6 +114,33 @@ class FightPunks:
             self.dummy.moving_left = True
         elif event.key == pygame.K_i: # Jump control
             self.dummy.jumping = True
+
+        # Player 2 Dash
+        elif event.key == pygame.K_l:
+            self.dummy.moving_right = True
+            # Dash controls
+            current_time = pygame.time.get_ticks()
+            if current_time - self.dummy.last_press_time <= self.dummy.double_press_window:
+                if not self.dummy.is_dashing:
+                    self.dummy.dash_right = True
+                    self.dummy.is_dashing = True
+                    self.dummy.dash_start_time = current_time
+                self.dummy.last_press_time = 0
+                
+            self.dummy.last_press_time = current_time
+
+        elif event.key == pygame.K_j:
+            self.dummy.moving_left = True
+            # Dash controls
+            current_time = pygame.time.get_ticks()
+            if current_time - self.dummy.last_press_time <= self.dummy.double_press_window:
+                if not self.dummy.is_dashing:
+                    self.dummy.dash_left = True
+                    self.dummy.is_dashing = True
+                    self.dummy.dash_start_time = current_time
+                self.dummy.last_press_time = 0
+                    
+            self.dummy.last_press_time = current_time
         
         # Escape to close
         elif event.key == pygame.K_ESCAPE:
@@ -139,7 +175,7 @@ class FightPunks:
         # Draws the fighter on the screen
         self.fighter.draw(self.screen)
         self.dummy.draw(self.screen)
-        self.fighter.attack(self.screen)
+        
         
         pygame.display.flip()
 

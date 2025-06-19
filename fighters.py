@@ -12,8 +12,8 @@ class Kevin():
         self.rect = pygame.Rect((x, y, 125, 320))
 
          # Kevin's attack hitboxes
-        self.hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
-                                  2 * self.rect.width, self.rect.height))
+        #self.attack_hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
+        #                          2 * self.rect.width, self.rect.height))
           
         # Start with Kevin not moving
         self.moving_right = False
@@ -24,6 +24,30 @@ class Kevin():
         self.blocking = False
         self.attack_1 = False
         self.attack_2 = False
+        self.is_attacking_1 = False
+        self.is_attacking_2 = False
+
+        # Attack 1 hitbox properties
+        self.attack_1_start_time = 0
+        self.attack_1_duration = 200 # milliseconds
+
+        self.attack_1_hitbox_width = 125 #customize to your own liking
+        self.attack_1_hitbox_height = 320 #customize to your own liking
+        self.attack_1_hitbox_offset_x_right = self.rect.x - 5 #customize to your own liking
+        self.attack_1_hitbox_offset_x_left = -self.attack_1_hitbox_width + 5 #customize to your own liking
+        self.attack_1_hitbox_offset_y = 0
+        self.attack_1_hitbox_rect = pygame.Rect(0, 0, 0, 0)
+
+        # Attack 2 hitbox properties
+        self.attack_2_start_time = 0
+        self.attack_2_duration = 400 # milliseconds
+
+        self.attack_2_hitbox_width = 70 #customize to your own liking
+        self.attack_2_hitbox_height = 40 #customize to your own liking
+        self.attack_2_hitbox_offset_x_right = self.rect.x - 20 #customize to your own liking
+        self.attack_2_hitbox_offset_x_left = -self.attack_2_hitbox_width + 5 #customize to your own liking
+        self.attack_2_hitbox_offset_y = 320 // 3
+        self.attack_2_hitbox_rect = pygame.Rect(0, 0, 0, 0)
 
         # Dash variables
         self.last_press_time = 0
@@ -69,6 +93,36 @@ class Kevin():
             if self.settings.fighter_vel_y < -self.settings.fighter_jump:
                 self.jumping = False
                 self.settings.fighter_vel_y = self.settings.fighter_jump
+
+        # attack states
+        if self.is_attacking_1:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.attack_1_start_time < self.attack_1_duration:
+                hitbox_x = self.rect.x + self.attack_1_hitbox_offset_x_right
+                
+                hitbox_y = self.rect.y + self.attack_1_hitbox_offset_y
+                self.attack_1_hitbox_rect.topleft = (hitbox_x, hitbox_y)
+                self.attack_1_hitbox_rect.width = self.attack_1_hitbox_width
+                self.attack_1_hitbox_rect.height = self.attack_1_hitbox_height
+            else:
+                # Attack 1 duration ended
+                self.is_attacking_1 = False
+                self.attack_1_hitbox_rect.size = (0, 0) # Hide hitbox
+
+        # === Handle Attack 2 state and hitbox ===
+        if self.is_attacking_2:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.attack_2_start_time < self.attack_2_duration:
+                hitbox_x = self.rect.x + self.attack_2_hitbox_offset_x_right
+                
+                hitbox_y = self.rect.y + self.attack_2_hitbox_offset_y
+                self.attack_2_hitbox_rect.topleft = (hitbox_x, hitbox_y)
+                self.attack_2_hitbox_rect.width = self.attack_2_hitbox_width
+                self.attack_2_hitbox_rect.height = self.attack_2_hitbox_height
+            else:
+                # Attack 2 duration ended
+                self.is_attacking_2 = False
+                self.attack_2_hitbox_rect.size = (0, 0) # Hide hitbox
               
         # Sets Kevin's range
         if self.rect.left < 0:
@@ -76,13 +130,21 @@ class Kevin():
         if self.rect.right > self.settings.screen_width:
             self.rect.right = self.settings.screen_width
           
-    def attack(self, surface):
-        """Kevin's attacks"""
-        pygame.draw.rect(surface, (255, 201, 24), self.hitbox)
+    #def attack(self, surface):
+    #   """Kevin's attacks"""
+    #    pygame.draw.rect(surface, (255, 201, 24), self.attack_hitbox)
         
     def draw(self, surface):
         """Draws Kevin into the screen"""
         pygame.draw.rect(surface, (255, 0, 0), self.rect)
+
+        # Draw Attack 1 hitbox (for debugging)
+        if self.is_attacking_1 and self.attack_1_hitbox_rect.width > 0:
+            pygame.draw.rect(surface, (255, 0, 0), self.attack_1_hitbox_rect, 2) # Red outline
+
+        # Draw Attack 2 hitbox (for debugging)
+        if self.is_attacking_2 and self.attack_2_hitbox_rect.width > 0:
+            pygame.draw.rect(surface, (0, 255, 0), self.attack_2_hitbox_rect, 2) # Green outline for attack 2
         
         
         
