@@ -10,7 +10,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 700
         self.bg_color = (128, 128, 128)
-        self.bg_image = pygame.image.load('assets/images/stages/stage1.bmp')
+        self.bg_image = pygame.image.load('assets/images/stages/Stage1.bmp')
 
         # Kevin's Settings
         self.fighter_speed = 15.0
