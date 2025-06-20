@@ -5,6 +5,9 @@ class Settings:
 
     def __init__(self):
         """Initializes game settings."""
+        pygame.display.init()
+        pygame.display.set_mode((1200, 700))
+        pygame.display.set_caption("FiGHTPuNKS")
 
         # Screen Settings
         self.screen_width = 1200

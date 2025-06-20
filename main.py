@@ -17,9 +17,8 @@ class FightPunks:
         self.fighter = Kevin(150, 210) # Calls Kevin in fighter.py
         self.dummy = Dummy(890, 210) # Calls Test Dummy
 
-        self.screen = pygame.display.set_mode((
-            self.settings.screen_width, self.settings.screen_height))
-        pygame.display.set_caption("F!ght Punks")
+        # Set up the display
+        self.screen = pygame.display.get_surface()
 
         # set the background color of the screen
         self.bg_color = (self.settings.bg_color)
