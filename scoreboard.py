@@ -4,6 +4,7 @@ class Scoreboard:
     """Class to report scoring information."""
     
     def __init__ (self, settings):
+        # not final!!!! <placeholder code block>
         """Initializes scorekeeping attributes."""
         self.settings = settings
         self.screen = settings.screen
