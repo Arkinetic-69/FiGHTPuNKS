@@ -1,5 +1,9 @@
 import pygame.font
 
+"""Scoreboard module.
+This module contains the Scoreboard class, which is responsible for displaying
+scoring information on the screen, such as the player's score."""
+
 class Scoreboard:
     """Class to report scoring information."""
     

@@ -1,6 +1,10 @@
 import pygame
 from settings import Settings
 
+"""Will organize the Dummy class here.
+Which is the Test Dummy that will be used for training purposes.
+Includes attributes same as the fighters."""
+
 class Dummy():
     """Initializes Dredmoore (Default Character)"""
     def __init__(self, x, y):

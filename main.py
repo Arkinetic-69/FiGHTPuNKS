@@ -5,7 +5,9 @@ from settings import Settings
 from fighters import Kevin
 from dummy import Dummy
 
-class FightPunks:
+"""Main file to run the FiGHTPuNKS game."""
+
+class FiGHTPuNKS:
     """Class to manage game assets and behaviour."""
 
     def __init__(self):
@@ -181,7 +183,7 @@ class FightPunks:
 
 if __name__ == '__main__':
     # Make game instance and run the game
-    fp = FightPunks()
+    fp = FiGHTPuNKS()
     fp.run_game()
 
 # test msg

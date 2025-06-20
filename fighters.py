@@ -2,6 +2,10 @@ import pygame
 from settings import Settings
 from pygame.sprite import Sprite
 
+"""I will organize out-of-game attributes here.
+This includes the fighter's attributes, such as speed, gravity, etc.
+Subject to change."""
+
 class Kevin(Sprite):
     """Initializes Kevin (Default Character)"""
     def __init__(self, x, y):

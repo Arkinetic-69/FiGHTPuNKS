@@ -1,5 +1,8 @@
 import pygame
 
+"""Handles game settings.
+Appropriate description will be added later."""
+
 class Settings:
     """Class for settings of the game."""
 
