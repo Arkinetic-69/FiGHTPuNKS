@@ -10,7 +10,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 700
         self.bg_color = (128, 128, 128)
-        self.bg_image = pygame.image.load('assets/images/stages/Stage1.bmp')
+        self.bg_image = pygame.image.load('assets/images/stages/Stage1.bmp').convert_alpha()
 
         # Kevin's Settings
         self.fighter_speed = 15.0
@@ -21,8 +21,8 @@ class Settings:
 
         self.fighter_atk = 0
 
-        self.fighter_idle = [pygame.image.load('assets/images/fighters/kevin/idle/idle1.bmp'), 
-                             pygame.image.load('assets/images/fighters/kevin/idle/idle2.bmp'),
-                             pygame.image.load('assets/images/fighters/kevin/idle/idle3.bmp'),
-                             pygame.image.load('assets/images/fighters/kevin/idle/idle4.bmp'),
-                             pygame.image.load('assets/images/fighters/kevin/idle/idle5.bmp'),]
+        self.fighter_idle = [pygame.image.load('assets/images/fighters/kevin/idle/idle1.bmp').convert_alpha(), 
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle2.bmp').convert_alpha(),
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle3.bmp').convert_alpha(),
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle4.bmp').convert_alpha(),
+                             pygame.image.load('assets/images/fighters/kevin/idle/idle5.bmp').convert_alpha()]
