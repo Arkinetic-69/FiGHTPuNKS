@@ -22,8 +22,8 @@ class FiGHTPuNKS:
         # Set up the display
         self.screen = pygame.display.get_surface()
 
-        # set the background color of the screen
-        self.bg_color = (self.settings.bg_color)
+        # Set the background color of the screen
+        self.bg_color = self.settings.bg_color
 
         # Initializes joystick support
         #pygame.joystick.init() 

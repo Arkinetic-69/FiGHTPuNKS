@@ -8,13 +8,13 @@ class Settings:
 
     def __init__(self):
         """Initializes game settings."""
-        pygame.display.init()
-        pygame.display.set_mode((1200, 700))
-        pygame.display.set_caption("FiGHTPuNKS")
-
         # Screen Settings
+        pygame.display.init()
         self.screen_width = 1200
         self.screen_height = 700
+        pygame.display.set_mode((self.screen_width, self.screen_height))
+        pygame.display.set_caption("FiGHTPuNKS")
+
         self.bg_color = (128, 128, 128)
         self.bg_image = pygame.image.load('assets/images/stages/stage1.bmp').convert_alpha()
 

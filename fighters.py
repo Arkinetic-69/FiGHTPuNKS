@@ -5,6 +5,9 @@ from pygame.sprite import Sprite
 """I will organize out-of-game attributes here.
 This includes the fighter's attributes, such as speed, gravity, etc.
 Subject to change."""
+#! Plan to change drawing behavior(using sprite groups and draw method, maybe)  - KirbyMolester69
+#! Will also maybe move stuff to a dictionary ewan                              - ahkoru
+#! also install Better Comments extension so comments can be color-coded :3     - KirbyMolester69 / ahkoru
 
 class Kevin(Sprite):
     """Initializes Kevin (Default Character)"""
