@@ -1,4 +1,4 @@
-import pygame
+import pygame, os
 
 """Handles game settings.
 Appropriate description will be added later."""
@@ -27,8 +27,25 @@ class Settings:
 
         self.fighter_atk = 0
 
-        self.fighter_idle = [pygame.image.load('assets/images/fighters/kevin/idle/k_idle1.bmp').convert_alpha(), 
-                             pygame.image.load('assets/images/fighters/kevin/idle/k_idle2.bmp').convert_alpha(),
-                             pygame.image.load('assets/images/fighters/kevin/idle/k_idle3.bmp').convert_alpha(),
-                             pygame.image.load('assets/images/fighters/kevin/idle/k_idle4.bmp').convert_alpha(),
-                             pygame.image.load('assets/images/fighters/kevin/idle/k_idle5.bmp').convert_alpha()]
+        # self.fighter_idle = [pygame.image.load('assets/images/fighters/kevin/idle/k_idle1.bmp').convert_alpha(), 
+        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle2.bmp').convert_alpha(),
+        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle3.bmp').convert_alpha(),
+        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle4.bmp').convert_alpha(),
+        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle5.bmp').convert_alpha()]
+        
+        # load kevin's idle animations
+        self.fighter_idle = self.load_fighter_anim('kevin', 'idle', True)
+        self.dummy_idle = self.load_fighter_anim('fIREgIRLSPRITE', 'idle', False)
+        
+    def load_fighter_anim(self, name, anim_type, is_player_1):
+        path = os.path.join('assets', 'images', 'fighters', name, anim_type)
+        animations = []
+        
+        for dirpath, dirname, filenames in os.walk(path):
+            for filename in filenames:
+                file_path = os.path.join(dirpath, filename)
+                frame = pygame.image.load(file_path).convert_alpha()
+                frame = pygame.transform.flip(frame, True, False) if not is_player_1 else frame
+                animations.append(frame)
+        
+        return animations
