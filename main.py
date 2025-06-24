@@ -2,8 +2,7 @@ import sys
 import pygame
 
 from settings import Settings
-from fighters import Kevin
-from dummy import Dummy
+from fighters import Fighter
 
 """Main file to run the FiGHTPuNKS game."""
 
@@ -16,8 +15,8 @@ class FiGHTPuNKS:
         self.clock = pygame.time.Clock()
         self.settings = Settings() # Calls settings.py
 
-        self.fighter = Kevin(150, 210) # Calls Kevin in fighter.py
-        self.dummy = Dummy(890, 210) # Calls Test Dummy
+        self.fighter = Fighter(150, 210, 'Fire Girl', True) # Calls Kevin in fighter.py
+        self.dummy = Fighter(890, 210, 'Kevin', False) # Calls Test Dummy
 
         # Set up the display
         self.screen = pygame.display.get_surface()
@@ -107,16 +106,7 @@ class FiGHTPuNKS:
                 self.fighter.is_attacking_2 = True
                 self.fighter.attack_2_start_time = pygame.time.get_ticks()
                 
-
         # Player 2 Movement
-        elif event.key == pygame.K_l:
-            self.dummy.moving_right = True
-        elif event.key == pygame.K_j:
-            self.dummy.moving_left = True
-        elif event.key == pygame.K_i: # Jump control
-            self.dummy.jumping = True
-
-        # Player 2 Dash
         elif event.key == pygame.K_l:
             self.dummy.moving_right = True
             # Dash controls
@@ -129,7 +119,6 @@ class FiGHTPuNKS:
                 self.dummy.last_press_time = 0
                 
             self.dummy.last_press_time = current_time
-
         elif event.key == pygame.K_j:
             self.dummy.moving_left = True
             # Dash controls
@@ -142,7 +131,21 @@ class FiGHTPuNKS:
                 self.dummy.last_press_time = 0
                     
             self.dummy.last_press_time = current_time
-        
+            
+        elif event.key == pygame.K_i: # Jump control
+            self.dummy.jumping = True
+            
+        elif event.key == pygame.K_m:
+            if not self.dummy.is_attacking_1:
+                self.dummy.attack_1 = True
+                self.dummy.is_attacking_1 = True
+                self.dummy.attack_1_start_time = pygame.time.get_ticks()
+
+        elif event.key == pygame.K_n:
+            if not self.dummy.is_attacking_2:
+                self.dummy.attack_2 = True
+                self.dummy.is_attacking_2 = True
+                self.dummy.attack_2_start_time = pygame.time.get_ticks()
         # Escape to close
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
@@ -165,6 +168,10 @@ class FiGHTPuNKS:
             self.dummy.moving_right = False
         elif event.key == pygame.K_j:
             self.dummy.moving_left = False
+        elif event.key == pygame.K_m:
+            self.dummy.attack_1 = False
+        elif event.key == pygame.K_n:
+            self.dummy.attack_2 = False
 
     def update_screen(self):
         """Updates images on the screen and flip to new screen"""
@@ -178,8 +185,6 @@ class FiGHTPuNKS:
         self.dummy.draw(self.screen)
 
         # self.screen.blit(self.fighter.idle[self.fighter.current_index], self.fighter.rect)
-        self.screen.blit(self.fighter.image, self.fighter.rect)
-        self.screen.blit(self.dummy.image, self.dummy.rect)
         
         pygame.display.flip()
 
