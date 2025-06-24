@@ -6,21 +6,25 @@ from pygame.sprite import Sprite
 This includes the fighter's attributes, such as speed, gravity, etc.
 Subject to change."""
 
-class Kevin(Sprite):
+class Fighter(Sprite):
     """Initializes Kevin (Default Character)"""
-    def __init__(self, x, y):
+    def __init__(self, x, y, fighter, is_player_1):
         """Initializes Kevin's behaviour"""
 
         super().__init__()
         self.settings = Settings() # Calls Settings
-
-        # Load both Kevin and his rect
-        self.rect = pygame.Rect((x, y, 125, 320))
+        self.is_player_1 = is_player_1
+        self.screen = pygame.display.get_surface()
 
         # Load Kevin's sprite and attributes
-        self.idle = self.settings.fighter_idle
-        self.max_index = len(self.settings.fighter_idle) - 1
-        self.current_index = self.max_index
+        self.idle = self.settings.fighters[fighter]
+        self.index_count = len(self.idle)
+        self.current_index = 0
+        self.anim_speed = .2
+
+        # Load both Kevin and his rect
+        self.image = self.idle[0]
+        self.rect = pygame.Rect((x, y, 125, 320))
 
          # Kevin's attack hitboxes
         #self.attack_hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
@@ -140,12 +144,19 @@ class Kevin(Sprite):
             self.rect.left = 0
         if self.rect.right > self.settings.screen_width:
             self.rect.right = self.settings.screen_width
+            
+        self.current_index += self.anim_speed
+        self.image = self.idle[int(self.current_index) % self.index_count]
+        if not self.is_player_1:
+            self.image = pygame.transform.flip(self.image, True, False)
+        
 
         # Sprite function
-        if self.current_index < self.max_index:
-            self.current_index += 1
-        else:
-            self.current_index = 0
+        # if self.current_index < self.max_index:
+        #     self.current_index += 1
+        # else:
+        #     self.current_index = 0
+   
           
     #def attack(self, surface):
     #   """Kevin's attacks"""
@@ -163,6 +174,9 @@ class Kevin(Sprite):
         if self.is_attacking_2 and self.attack_2_hitbox_rect.width > 0:
             pygame.draw.rect(surface, (0, 255, 0), self.attack_2_hitbox_rect, 2) # Green outline for attack 2
 
+        # draw the frame
+        self.screen.blit(self.image, self.rect)
+        
     def animate(self):
         """ sprite animation """
         pass
