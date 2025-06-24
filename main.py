@@ -177,7 +177,8 @@ class FiGHTPuNKS:
         self.fighter.draw(self.screen)
         self.dummy.draw(self.screen)
 
-        self.screen.blit(self.fighter.idle[self.fighter.current_index], self.fighter.rect)
+        # self.screen.blit(self.fighter.idle[self.fighter.current_index], self.fighter.rect)
+        self.screen.blit(self.fighter.image, self.fighter.rect)
         
         pygame.display.flip()
 

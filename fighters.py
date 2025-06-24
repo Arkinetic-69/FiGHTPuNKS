@@ -17,13 +17,15 @@ class Kevin(Sprite):
         super().__init__()
         self.settings = Settings() # Calls Settings
 
-        # Load both Kevin and his rect
-        self.rect = pygame.Rect((x, y, 125, 320))
-
         # Load Kevin's sprite and attributes
         self.idle = self.settings.fighter_idle
-        self.max_index = len(self.settings.fighter_idle) - 1
-        self.current_index = self.max_index
+        self.index_count = len(self.settings.fighter_idle)
+        self.current_index = 0
+        self.anim_speed = .2
+
+        # Load both Kevin and his rect
+        self.image = self.idle[0]
+        self.rect = pygame.Rect((x, y, 125, 320))
 
          # Kevin's attack hitboxes
         #self.attack_hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
@@ -145,10 +147,12 @@ class Kevin(Sprite):
             self.rect.right = self.settings.screen_width
 
         # Sprite function
-        if self.current_index < self.max_index:
-            self.current_index += 1
-        else:
-            self.current_index = 0
+        # if self.current_index < self.max_index:
+        #     self.current_index += 1
+        # else:
+        #     self.current_index = 0
+        self.current_index += self.anim_speed
+        self.image = self.idle[int(self.current_index) % self.index_count]       
           
     #def attack(self, surface):
     #   """Kevin's attacks"""
