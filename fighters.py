@@ -19,7 +19,7 @@ class Kevin(Sprite):
 
         # Load Kevin's sprite and attributes
         self.idle = self.settings.fighter_idle
-        self.index_count = len(self.settings.fighter_idle)
+        self.index_count = len(self.idle)
         self.current_index = 0
         self.anim_speed = .2
 
