@@ -8,7 +8,7 @@ class Settings:
 
     def __init__(self):
         """Initializes game settings."""
-        pygame.display.init()
+        pygame.init()
         pygame.display.set_mode((1200, 700))
         pygame.display.set_caption("FiGHTPuNKS")
 
