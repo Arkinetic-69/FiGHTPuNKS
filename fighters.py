@@ -1,22 +1,25 @@
 import pygame
 from settings import Settings
-from pygame.sprite import Sprite
+
 
 """I will organize out-of-game attributes here.
 This includes the fighter's attributes, such as speed, gravity, etc.
 Subject to change."""
 
-class Fighter(Sprite):
+class Fighter(pygame.sprite.Sprite):
     """Initializes Kevin (Default Character)"""
-    def __init__(self, x, y, fighter, is_player_1):
+    def __init__(self, game_instance, x, y, fighter, is_player_1, select = -1):
         """Initializes Kevin's behaviour"""
-
         super().__init__()
-        self.settings = Settings() # Calls Settings
-        self.is_player_1 = is_player_1
+        self.game = game_instance
+        self.settings = self.game.settings # Calls Settings
         self.screen = pygame.display.get_surface()
+        
+        # For menu purposes
+        self.selector = select
 
         # Load Kevin's sprite and attributes
+        self.is_player_1 = is_player_1
         self.idle = self.settings.fighters[fighter]['idle']
         self.index_count = len(self.idle)
         self.current_index = 0
@@ -24,7 +27,7 @@ class Fighter(Sprite):
 
         # Load both Kevin and his rect
         self.image = self.idle[0]
-        self.rect = pygame.Rect((x, y, 125, 320))
+        self.rect = self.image.get_frect(midbottom = (x, y))
 
          # Kevin's attack hitboxes
         #self.attack_hitbox = pygame.Rect((self.rect.centerx, self.rect.y,
@@ -144,27 +147,39 @@ class Fighter(Sprite):
             self.rect.left = 0
         if self.rect.right > self.settings.screen_width:
             self.rect.right = self.settings.screen_width
-            
-        self.current_index += self.anim_speed
-        self.image = self.idle[int(self.current_index) % self.index_count]
-        if not self.is_player_1:
-            self.image = pygame.transform.flip(self.image, True, False)
-        
 
+        self.animate()
         # Sprite function
         # if self.current_index < self.max_index:
         #     self.current_index += 1
         # else:
         #     self.current_index = 0
-   
-          
+
+    def menu_update(self, mouse_pos, animation_speed_scale, selected_num):
+        """Update method used when using it in the character select"""
+        # Animates the idle animation
+        self.animate(animation_speed_scale)
+        
+        image = self.image
+        
+        # Detects if the cursor is hovering on it
+        if self.rect.collidepoint(mouse_pos) or selected_num == self.selector:
+            image = pygame.transform.rotozoom(self.image, 0, 1.2)
+            
+        self.screen.blit(image, self.rect)
+
+    def on_click(self, mouse_pos):
+        """For when the fighter is clicked on the menu"""
+        if self.rect.collidepoint(mouse_pos):
+            return self.selector
+        
     #def attack(self, surface):
     #   """Kevin's attacks"""
     #    pygame.draw.rect(surface, (255, 201, 24), self.attack_hitbox)
         
     def draw(self, surface):
         """Draws Kevin into the screen"""
-        pygame.draw.rect(surface, (255, 0, 0), self.rect)
+        # pygame.draw.rect(surface, (255, 0, 0), self.rect)
 
         # Draw Attack 1 hitbox (for debugging)
         if self.is_attacking_1 and self.attack_1_hitbox_rect.width > 0:
@@ -177,6 +192,10 @@ class Fighter(Sprite):
         # draw the frame
         self.screen.blit(self.image, self.rect)
         
-    def animate(self):
+    def animate(self, animation_speed_scale = 1):
         """ sprite animation """
-        pass
+        self.current_index += self.anim_speed * animation_speed_scale
+        self.image = self.idle[int(self.current_index) % self.index_count]
+        if not self.is_player_1:
+            self.image = pygame.transform.flip(self.image, True, False)
+        

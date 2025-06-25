@@ -1,9 +1,10 @@
-import sys
-import pygame
+import pygame, sys
 
 from settings import Settings
 from fighters import Fighter
-11
+from menu import Menus
+from debug import PgDebug
+
 """Main file to run the FiGHTPuNKS game."""
 
 class FiGHTPuNKS:
@@ -14,22 +15,33 @@ class FiGHTPuNKS:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings() # Calls settings.py
-
-        self.fighter = Fighter(150, 210, 'fIREgIRLSPRITE', True) # Calls Kevin in fighter.py
-        self.dummy = Fighter(890, 210, 'kevin', False) # Calls Test Dummy
+        
+        # For debugging
+        self.debug = PgDebug()
+        self.debug.debugging = True
 
         # Set up the display
         self.screen = pygame.display.get_surface()
 
         # Set the background color of the screen
         self.bg_color = self.settings.bg_color
+        
+        # Start Menu
+        self.menus = Menus(self)
+        self.menus.start_menu()
 
         # Initializes joystick support
         #pygame.joystick.init() 
         #self.joystick = []
 
+    def load_fighters(self):
+        self.fighter = Fighter(self, 150, 210, 'Dredmoore', True) # Calls Kevin in fighter.py
+        self.dummy = Fighter(self, 890, 210, 'kevin', False) # Calls Test Dummy
+
     def run_game(self):
         """Start the main loop for the game"""
+        self.load_fighters()
+        
         while True:
             self.check_events()
             self.fighter.update()
@@ -54,6 +66,11 @@ class FiGHTPuNKS:
                 self.check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self.check_keyup_events(event)
+            # elif event.type == pygame.MOUSEBUTTONDOWN:
+            #     mouse_pos = pygame.mouse.get_pos()
+            #     for button in self.menu_sprites.sprites():
+            #         if button.rect.collidepoint(mouse_pos):
+            #             button.clicked()
 
             # Joystick events
             elif event.type == pygame.JOYBUTTONDOWN:
@@ -148,7 +165,7 @@ class FiGHTPuNKS:
                 self.dummy.attack_2_start_time = pygame.time.get_ticks()
         # Escape to close
         elif event.key == pygame.K_ESCAPE:
-            sys.exit()
+            self.menus.start_menu()
     
     def check_keyup_events(self,event):
         """Responds to keys being released"""

@@ -1,27 +1,133 @@
-import pygame
+import pygame, sys
+from button import Button
+from fighters import Fighter
 
 """Handles displaying the ui.
 This module contains the Menu class, which is responsible for displaying
 the main menu, options, and other UI elements in the game."""
 
-class Menu:
+class Menus:
     """Class to handle the game menu and UI."""
     
-    def __init__(self, screen):
-        """Initialize the menu with a screen."""
-        self.screen = screen
-        self.screen_rect = self.screen.get_rect()
-        self.font = pygame.font.SysFont(None, 48)
-        self.menu_items = ["Start Game", "Options", "Exit"]
-        self.selected_item = 0
+    def __init__(self, game_instance):
+        # pygame.init()
+        # pygame.display.set_mode((1200, 700))
+        self.game = game_instance
+        self.screen = pygame.display.get_surface()
+        self.screen_rect = self.screen.get_frect()
+        self.font = pygame.Font('assets/fonts/NIRVANA.TTF', 60)
+        self.clock = pygame.Clock()
+        
+        self.logo = pygame.image.load('assets/images/menu/logo.png').convert_alpha()
+        
 
-    def draw_menu(self):
-        """Draw the menu on the screen."""
-        self.screen.fill((0, 0, 0))  # Clear the screen with black
-        for index, item in enumerate(self.menu_items):
-            color = (255, 255, 255) if index == self.selected_item else (200, 200, 200)
-            text_surface = self.font.render(item, True, color)
-            text_rect = text_surface.get_rect(center=(self.screen_rect.centerx, 
-                                                      self.screen_rect.centery + index * 50))
-            self.screen.blit(text_surface, text_rect)
-        pygame.display.flip()
+    def start_menu(self):
+        # Buttons
+        START = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 25), 'START', self.font, 'black', 'red')
+        SETTINGS = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 100), 'SETTINGS', self.font, 'black', 'red')
+        CREDITS = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 175), 'CREDITS', self.font, 'black', 'red')
+        QUIT = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 250), 'QUIT', self.font, 'black', 'red')
+        
+        bg_image = pygame.image.load('assets/images/menu/start_menu.2.png').convert()
+        bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
+        logo = pygame.transform.rotozoom(self.logo, 0, .8)
+        logo_rect = logo.get_frect(center = (self.screen_rect.centerx, self.screen_rect.centery - 175))
+        
+        while True:
+            self.clock.tick(60)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if START.is_clicked():
+                        self.character_select_menu()
+                    elif SETTINGS.is_clicked():
+                        self.settings_menu()
+                    elif CREDITS.is_clicked():
+                        self.credits_menu()
+                    elif QUIT.is_clicked():
+                        sys.exit()
+            
+            self.screen.blit(bg_image, (0,0))
+            self.screen.blit(logo, logo_rect)
+            for button in [START, SETTINGS, CREDITS, QUIT]:
+                button.update(self.screen)
+            
+            pygame.display.flip()
+    
+    def settings_menu(self):
+        pass
+    
+    def credits_menu(self):
+        # Buttons
+        EXIT = Button(None, (self.screen_rect.centerx, self.screen_rect.centery), 'EXIT', self.font, 'black', 'red')
+        
+        bg_image = pygame.image.load('assets/images/menu/start_menu.png').convert()
+        bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
+
+        while True:
+            self.clock.tick(60)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if EXIT.is_clicked():
+                        self.start_menu()
+            
+            self.screen.blit(bg_image, (0,0))
+            for button in [EXIT]:
+                button.update(self.screen)
+            
+            pygame.display.flip()
+    
+    def character_select_menu(self):
+        self._load_fighters()
+        
+        # Background Image
+        bg_image = pygame.image.load('assets/images/menu/character_select_no_char.png').convert()
+        bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
+        selected1 = 0
+        selected2 = 0
+        while True:
+            print(selected1, selected2)
+            mouse_pos = pygame.mouse.get_pos()
+            self.clock.tick(60)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    for fighter in [self.fighter1, self.fighter2, self.fighter3]:
+                        clicked = fighter.on_click(mouse_pos)
+                        selected1 =  clicked if clicked else selected1
+                    for fighter in [self.fighter4, self.fighter5, self.fighter6]:
+                        clicked = fighter.on_click(mouse_pos)
+                        selected2 =  clicked if clicked else selected2
+                    
+            self.screen.blit(bg_image, (0,0))
+            for fighter in [self.fighter1, self.fighter2, self.fighter3]:
+                fighter.menu_update(mouse_pos, 0.5, selected1)
+            for fighter in [self.fighter4, self.fighter5, self.fighter6]:
+                fighter.menu_update(mouse_pos, 0.5, selected2)
+
+            self.game.debug.debug(str(pygame.mouse.get_pos()))
+            pygame.display.flip()
+    
+    def _load_fighters(self):
+        """Loads the fighters for character select"""
+        self.fighter1 = Fighter(self.game, 130, 400, 'fIREgIRLSPRITE', True, 1)
+        self.fighter2 = Fighter(self.game, 271, 465, 'Dredmoore', True, 2)
+        self.fighter3 = Fighter(self.game, 404, 530, 'kevin', True, 3)
+        
+        self.fighter4 = Fighter(self.game, 794, 530, 'kevin', False, 4)
+        self.fighter5 = Fighter(self.game, 931, 465, 'Dredmoore', False, 5)
+        self.fighter6 = Fighter(self.game, 1078, 400, 'fIREgIRLSPRITE', False, 6)
+
+    
+    def post_game_menu(self):
+        pass
+
+# menu = Menus()
+# menu.start_menu()

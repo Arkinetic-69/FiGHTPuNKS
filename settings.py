@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, random
 
 """Handles game settings.
 Appropriate description will be added later."""
@@ -15,8 +15,10 @@ class Settings:
         pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("FiGHTPuNKS")
 
+        #
         self.bg_color = (128, 128, 128)
-        self.bg_image = pygame.image.load('assets/images/stages/stage1.bmp').convert_alpha()
+        num = random.choice(range(1,5))
+        self.bg_image = pygame.image.load(f'assets/images/stages/stage{num}.png').convert_alpha()
 
         # Kevin's Settings
         self.fighter_speed = 15.0
@@ -26,12 +28,6 @@ class Settings:
         self.fighter_dash = 50.0
 
         self.fighter_atk = 0
-
-        # self.fighter_idle = [pygame.image.load('assets/images/fighters/kevin/idle/k_idle1.bmp').convert_alpha(), 
-        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle2.bmp').convert_alpha(),
-        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle3.bmp').convert_alpha(),
-        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle4.bmp').convert_alpha(),
-        #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle5.bmp').convert_alpha()]
         
         # load fighter animations
         self.fighters = self.load_fighters()
@@ -42,7 +38,7 @@ class Settings:
         fighter_animations = {}
         
         # Get fighter names
-        for dirpath, dirname, filenames in data:
+        for _, dirname, _ in data:
             fighters = dirname
             break
         
@@ -61,6 +57,7 @@ class Settings:
             actions = dirname
             break
         
+        # Load animations frames
         for action in actions:
             animations[action] = []
             for dirpath, dirname, filenames in os.walk(f"{path}/{action}"):
