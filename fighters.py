@@ -14,6 +14,7 @@ class Fighter(pygame.sprite.Sprite):
         self.game = game_instance
         self.settings = self.game.settings # Calls Settings
         self.screen = pygame.display.get_surface()
+        self.name = fighter
         
         # For menu purposes
         self.selector = select
@@ -155,7 +156,7 @@ class Fighter(pygame.sprite.Sprite):
         # else:
         #     self.current_index = 0
 
-    def menu_update(self, mouse_pos, animation_speed_scale, selected_num):
+    def menu_update(self, mouse_pos, animation_speed_scale, selected):
         """Update method used when using it in the character select"""
         # Animates the idle animation
         self.animate(animation_speed_scale)
@@ -163,7 +164,7 @@ class Fighter(pygame.sprite.Sprite):
         image = self.image
         
         # Detects if the cursor is hovering on it
-        if self.rect.collidepoint(mouse_pos) or selected_num == self.selector:
+        if self.rect.collidepoint(mouse_pos) or selected == self.name:
             image = pygame.transform.rotozoom(self.image, 0, 1.2)
             
         self.screen.blit(image, self.rect)
@@ -171,7 +172,7 @@ class Fighter(pygame.sprite.Sprite):
     def on_click(self, mouse_pos):
         """For when the fighter is clicked on the menu"""
         if self.rect.collidepoint(mouse_pos):
-            return self.selector
+            return self.name
         
     #def attack(self, surface):
     #   """Kevin's attacks"""

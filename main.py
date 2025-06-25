@@ -34,14 +34,12 @@ class FiGHTPuNKS:
         #pygame.joystick.init() 
         #self.joystick = []
 
-    def load_fighters(self):
-        self.fighter = Fighter(self, 150, 210, 'Dredmoore', True) # Calls Kevin in fighter.py
-        self.dummy = Fighter(self, 890, 210, 'kevin', False) # Calls Test Dummy
+    def load_fighters(self, name1, name2):
+        self.fighter = Fighter(self, (self.screen.width / 5) * 1, 650, name1, True) # Calls Kevin in fighter.py
+        self.dummy = Fighter(self, (self.screen.width / 5) * 4, 650, name2, False) # Calls Test Dummy
 
     def run_game(self):
         """Start the main loop for the game"""
-        self.load_fighters()
-        
         while True:
             self.check_events()
             self.fighter.update()
