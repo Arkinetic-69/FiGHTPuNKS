@@ -1,0 +1,45 @@
+{
+  "session": {
+    "games_played": 0,
+    "total_playtime": 0,
+    "last_played": null
+  },
+  "players": {
+    "player1": {
+      "wins": 0,
+      "losses": 0,
+      "total_damage_dealt": 0,
+      "total_damage_taken": 0,
+      "favorite_fighter": null,
+      "longest_combo": 0
+    },
+    "player2": {
+      "wins": 0,
+      "losses": 0,
+      "total_damage_dealt": 0,
+      "total_damage_taken": 0,
+      "favorite_fighter": null,
+      "longest_combo": 0
+    }
+  },
+  "fighters": {
+    "Kevin": {
+      "times_played": 0,
+      "wins": 0,
+      "losses": 0,
+      "total_damage": 0
+    },
+    "Fire Girl": {
+      "times_played": 0,
+      "wins": 0,
+      "losses": 0,
+      "total_damage": 0
+    }
+  },
+  "achievements": {
+    "first_win": false,
+    "perfect_victory": false,
+    "combo_master": false,
+    "endurance_fighter": false
+  }
+}

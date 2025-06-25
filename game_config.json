@@ -1,0 +1,58 @@
+{
+  "display": {
+    "screen_width": 1200,
+    "screen_height": 700,
+    "title": "FiGHTPuNKS",
+    "fullscreen": false,
+    "fps": 60
+  },
+  "graphics": {
+    "scale_factor": 1.0,
+    "supported_resolutions": [
+      [800, 600],
+      [1024, 768],
+      [1200, 700],
+      [1366, 768],
+      [1920, 1080]
+    ],
+    "minimum_resolution": [800, 600]
+  },
+  "gameplay": {
+    "fighter_speed": 15.0,
+    "fighter_vel_y": 40.0,
+    "fighter_gravity": 5.0,
+    "fighter_jump": 40.0,
+    "fighter_dash": 50.0
+  },
+  "audio": {
+    "master_volume": 1.0,
+    "music_volume": 0.8,
+    "sfx_volume": 0.9,
+    "enabled": true
+  },
+  "controls": {
+    "player1": {
+      "left": "a",
+      "right": "d",
+      "jump": "w",
+      "attack1": "c",
+      "attack2": "v",
+      "block": "s"
+    },
+    "player2": {
+      "left": "left",
+      "right": "right",
+      "jump": "up",
+      "attack1": "n",
+      "attack2": "b",
+      "block": "down"
+    }
+  },
+  "paths": {
+    "assets": "assets",
+    "fighters": "assets/images/fighters",
+    "stages": "assets/images/stages",
+    "audio": "assets/audio",
+    "fonts": "assets/fonts"
+  }
+}
