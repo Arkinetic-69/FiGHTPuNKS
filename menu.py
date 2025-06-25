@@ -113,7 +113,8 @@ class Menus:
                         selected2 =  clicked if clicked else selected2
                     
                     if PLAY.is_clicked():
-                        self.game.load_fighters(selected1, selected2)
+                        duplicate = selected1 == selected2
+                        self.game.load_fighters(selected1, selected2, duplicate)
                         self.game.run_game()
               
             self.screen.blit(bg_image, (0,0))

@@ -8,13 +8,14 @@ Subject to change."""
 
 class Fighter(pygame.sprite.Sprite):
     """Initializes Kevin (Default Character)"""
-    def __init__(self, game_instance, x, y, fighter, is_player_1, select = -1):
+    def __init__(self, game_instance, x, y, fighter, is_player_1, select = -1, is_inverted = False):
         """Initializes Kevin's behaviour"""
         super().__init__()
         self.game = game_instance
         self.settings = self.game.settings # Calls Settings
         self.screen = pygame.display.get_surface()
         self.name = fighter
+        self.inverted = is_inverted
         
         # For menu purposes
         self.selector = select
@@ -191,6 +192,8 @@ class Fighter(pygame.sprite.Sprite):
             pygame.draw.rect(surface, (0, 255, 0), self.attack_2_hitbox_rect, 2) # Green outline for attack 2
 
         # draw the frame
+        if self.inverted:
+            self.image = pygame.transform.invert(self.image)
         self.screen.blit(self.image, self.rect)
         
     def animate(self, animation_speed_scale = 1):
