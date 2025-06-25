@@ -3,7 +3,7 @@ import pygame
 
 from settings import Settings
 from fighters import Fighter
-
+11
 """Main file to run the FiGHTPuNKS game."""
 
 class FiGHTPuNKS:
@@ -15,8 +15,8 @@ class FiGHTPuNKS:
         self.clock = pygame.time.Clock()
         self.settings = Settings() # Calls settings.py
 
-        self.fighter = Fighter(150, 210, 'Fire Girl', True) # Calls Kevin in fighter.py
-        self.dummy = Fighter(890, 210, 'Kevin', False) # Calls Test Dummy
+        self.fighter = Fighter(150, 210, 'fIREgIRLSPRITE', True) # Calls Kevin in fighter.py
+        self.dummy = Fighter(890, 210, 'kevin', False) # Calls Test Dummy
 
         # Set up the display
         self.screen = pygame.display.get_surface()

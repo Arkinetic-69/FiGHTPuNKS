@@ -33,21 +33,40 @@ class Settings:
         #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle4.bmp').convert_alpha(),
         #                      pygame.image.load('assets/images/fighters/kevin/idle/k_idle5.bmp').convert_alpha()]
         
-        # load kevin's idle animations
-        self.kevin_idle = self.load_fighter_anim('kevin', 'idle')
-        self.fire_girl_idle = self.load_fighter_anim('fIREgIRLSPRITE', 'idle')
+        # load fighter animations
+        self.fighters = self.load_fighters()
         
-        self.fighters = {'Kevin': self.kevin_idle,
-                         'Fire Girl': self.fire_girl_idle}
+    def load_fighters(self):
+        path = os.path.join('assets', 'images', 'fighters')
+        data = os.walk(path)
+        fighter_animations = {}
         
-    def load_fighter_anim(self, name, anim_type):
-        path = os.path.join('assets', 'images', 'fighters', name, anim_type)
-        animations = []
+        # Get fighter names
+        for dirpath, dirname, filenames in data:
+            fighters = dirname
+            break
         
-        for dirpath, dirname, filenames in os.walk(path):
-            for filename in filenames:
-                file_path = os.path.join(dirpath, filename)
-                frame = pygame.image.load(file_path).convert_alpha()
-                animations.append(frame)
+        # Load fighter animations
+        for fighter in fighters:
+            fighter_animations[fighter] = self.load_fighter_anim(fighter)
         
+        return fighter_animations
+
+    def load_fighter_anim(self, name):
+        path = os.path.join('assets', 'images', 'fighters', name)
+        animations = {}
+        
+        # Get fighter actions
+        for _, dirname, _ in os.walk(path):
+            actions = dirname
+            break
+        
+        for action in actions:
+            animations[action] = []
+            for dirpath, dirname, filenames in os.walk(f"{path}/{action}"):
+                for filename in filenames:
+                    filepath = os.path.join(dirpath, filename)
+                    frame = pygame.image.load(filepath).convert_alpha()
+                    animations[action].append(frame)
+
         return animations
