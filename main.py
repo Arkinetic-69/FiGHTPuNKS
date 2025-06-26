@@ -18,13 +18,18 @@ class FiGHTPuNKS:
         self.settings = Settings() # Calls settings.py
         self.sounds = Sounds() # Calls sounds.py
         self.timer_font = pygame.Font('assets/fonts/NIRVANA.TTF', 100)
+        self.settings = Settings() # This should initialize display
+        
+        # Set up the display (after settings)
+        self.screen = pygame.display.get_surface()
+        if not self.screen:
+            self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+    
+        self.sounds = Sounds() # Initialize sounds after display
         
         # For debugging
         self.debug = PgDebug()
         self.debug.debugging = True
-
-        # Set up the display
-        self.screen = pygame.display.get_surface()
 
         # Set the background color of the screen
         self.bg_color = self.settings.bg_color
@@ -72,6 +77,11 @@ class FiGHTPuNKS:
         
         self.stage = self.settings.stages[random.randint(1, len(self.settings.stages) - 1)]
         self.running = True
+        
+        # Load stage music - only play ONE random stage music
+        stage_keys = list(self.sounds.stage_music.keys())
+        random_stage = stage_keys[random.randint(0, len(stage_keys) - 1)]
+        self.sounds.play_stage_music(random_stage)
         
         while self.running:
             self.check_events()
