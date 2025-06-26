@@ -151,6 +151,38 @@ class Menus:
         self.fighter5 = Fighter(self.game, 931, 465, 'Dredmoore', False, 2)
         self.fighter6 = Fighter(self.game, 1078, 400, 'Xiuhcoatl', False, 1)
 
+    def pause_menu(self):
+        CONTINUE = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 100), 'CONTINUE', self.font, 'white', 'red')
+        SETTINGS = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 175), 'SETTINGS', self.font, 'white', 'red')
+        QUIT = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 250), 'EXIT', self.font, 'white', 'red')
+        
+        bg_image = pygame.image.load('assets/images/menu/Matrix_Main_bg.png').convert()
+        bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
+        logo = pygame.transform.rotozoom(self.logo, 0, 1)
+        logo_rect = logo.get_frect(center = (self.screen_rect.centerx, self.screen_rect.centery - 150))
+        
+        running = True
+
+        while running:
+            self.clock.tick(60)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if CONTINUE.is_clicked():
+                        running = False
+                    elif SETTINGS.is_clicked():
+                        self.settings_menu()
+                    elif QUIT:
+                        sys.exit()
+            
+            self.screen.blit(bg_image, (0,0))
+            self.screen.blit(logo, logo_rect)
+            for button in [CONTINUE, SETTINGS, QUIT]:
+                button.update(self.screen)
+            
+            pygame.display.flip()
     
     def post_game_menu(self):
         pass

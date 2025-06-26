@@ -168,7 +168,7 @@ class FiGHTPuNKS:
                 self.dummy.attack_2_start_time = pygame.time.get_ticks()
         # Escape to close
         elif event.key == pygame.K_ESCAPE:
-            self.running = False
+            self.menus.pause_menu()
     
     def check_keyup_events(self,event):
         """Responds to keys being released"""
