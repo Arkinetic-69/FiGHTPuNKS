@@ -42,7 +42,7 @@ class FiGHTPuNKS:
                              name2, False, is_inverted=invert) # Calls Test Dummy
         
     def show_hp(self, fighter, pos, is_player_1):
-        surf = pygame.Surface((fighter.hp * 5, 50))
+        surf = pygame.Surface((fighter.hp * 5 or 1, 50))
         if is_player_1:
             surf_rect = surf.get_frect(topleft = pos)
         else:
@@ -69,6 +69,8 @@ class FiGHTPuNKS:
         self.running = True
         self.start_time = pygame.time.get_ticks()
         self.time = 60000
+        self.death_time = 500
+        
         
         while self.running:
             self.check_events()
@@ -240,6 +242,11 @@ class FiGHTPuNKS:
         self.show_hp(self.dummy, (self.screen.width - 50,50), False)
         
         self.timer((self.screen.width/2, 75))
+        
+        if self.dummy.death > 0:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.dummy.death >= self.death_time:
+                self.running = False
 
         # self.screen.blit(self.fighter.idle[self.fighter.current_index], self.fighter.rect)
         

@@ -17,6 +17,7 @@ class Fighter(pygame.sprite.Sprite):
         self.name = fighter
         self.inverted = is_inverted
         self.hp = 100
+        self.death = 0
         
         # For menu purposes
         self.selector = select
@@ -78,7 +79,7 @@ class Fighter(pygame.sprite.Sprite):
         # Dash state
         self.is_dashing = False #Dash state indicator
         self.dash_start_time = 0 
-        self.dash_duration = 100 
+        self.dash_duration = 50 
 
         # Updates player position
         self.x = float(self.rect.x)
@@ -88,6 +89,17 @@ class Fighter(pygame.sprite.Sprite):
         """Updates Kevin based on movement flag"""
         # Movement
         action = 'idle'
+        if self.death > 0:
+            self.hp = 1
+            self.animate('death')
+            return
+        if self.hp <= 1:
+            action = 'death'
+            self.death = pygame.time.get_ticks()
+        
+        if not self.is_player_1:
+            self.animate(action)
+            return
         
         if self.moving_right:
             action = 'walkr'
@@ -128,11 +140,19 @@ class Fighter(pygame.sprite.Sprite):
             current_time = pygame.time.get_ticks()
             if current_time - self.attack_1_start_time < self.attack_1_duration:
                 hitbox_x = self.rect.x + self.attack_1_hitbox_offset_x_right
-                
                 hitbox_y = self.rect.y + self.attack_1_hitbox_offset_y
                 self.attack_1_hitbox_rect.topleft = (hitbox_x, hitbox_y)
                 self.attack_1_hitbox_rect.width = self.attack_1_hitbox_width
                 self.attack_1_hitbox_rect.height = self.attack_1_hitbox_height
+                
+                if self.inverted:
+                    if self.attack_1_hitbox_rect.colliderect(self.game.fighter.rect):
+                        print('hit fighter')
+                        self.game.dummy.hp -= .8
+                else:
+                    if self.attack_1_hitbox_rect.colliderect(self.game.dummy.rect):
+                        print('hit dummy')
+                        self.game.dummy.hp -= .8
             else:
                 # Attack 1 duration ended
                 self.is_attacking_1 = False
@@ -149,6 +169,15 @@ class Fighter(pygame.sprite.Sprite):
                 self.attack_2_hitbox_rect.topleft = (hitbox_x, hitbox_y)
                 self.attack_2_hitbox_rect.width = self.attack_2_hitbox_width
                 self.attack_2_hitbox_rect.height = self.attack_2_hitbox_height
+                
+                if self.inverted:
+                    if self.attack_2_hitbox_rect.colliderect(self.game.fighter.rect):
+                        print('hit fighter')
+                        self.game.dummy.hp -= .5
+                else:
+                    if self.attack_2_hitbox_rect.colliderect(self.game.dummy.rect):
+                        print('hit dummy')
+                        self.game.dummy.hp -= .5
             else:
                 # Attack 2 duration ended
                 self.is_attacking_2 = False

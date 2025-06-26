@@ -98,7 +98,7 @@ class Menus:
         
         while running:
             # For debugging
-            print(selected1, selected2)
+            print(selected1 or None, 'vs', selected2 or None)
             self.game.debug.debug(str(pygame.mouse.get_pos()))
             
             mouse_pos = pygame.mouse.get_pos()
