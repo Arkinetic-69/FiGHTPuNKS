@@ -10,26 +10,24 @@ class Sounds:
     def __init__(self):
         """Initialize the sound system."""
         pygame.mixer.init()
-        self.menu_music = r'assets\audio\music\OST\main menu\Oddysey.m4a'
+        self.menu_music = r'assets\audio\music\OST\main menu\Oddysey.mp3'
         self.stage_music = {
-            'stage1': r'assets\audio\music\OST\stages\Enemy State.m4a',
-            'stage2': r'assets\audio\music\OST\stages\Nano-angstrom.m4a',
-            'stage3': r'assets\audio\music\OST\stages\!!.m4a',
+            'stage1': r'assets\audio\music\OST\stages\!!.mp3',
+            'stage2': r'assets\audio\music\OST\stages\Space Cowboys.mp3',
+            'stage3': r'assets\audio\music\OST\stages\Nano-angstrom.mp3',
+            'stage4': r'assets\audio\music\OST\stages\Enemy State.mp3',
         }
         self.sound_effects = {
-            'combat':{'atk 1': r'assets\audio\sfx\hit.wav', 
-             'atk 2': r'assets\audio\sfx\kick.wav',
-             'ability': r'assets\audio\sfx\punch.wav',
+            'combat':{'atk 1': r'assets\audio\sfx\atk_1.wav', 
+             'atk 2': r'assets\audio\sfx\atk_2.wav',
              'jump': r'assets\audio\sfx\jump.wav',
              'block': r'assets\audio\sfx\block.wav',
              'hit': r'assets\audio\sfx\hit.wav',
              'death': r'assets\audio\sfx\death.wav'
             },
             'button': r'assets\audio\sfx\button_click.wav',
-            'victory': r'assets\audio\sfx\victory.m4a'
+            'victory': r'assets\audio\sfx\victory.mp3'
         }
-        self.credits_music = r'assets\audio\music\OST\Space Cowboy.m4a'
-        self.load_sounds()
         
     def play_menu_music(self):
         """Play the main menu music."""
@@ -46,18 +44,37 @@ class Sounds:
         else:
             print(f"Stage music for '{stage}' not found.")
     
-    def play_sound_effect(self, effect):
-        """Play a sound effect based on the effect name."""
-        if effect in self.sound_effects['combat']:
-            sound = pygame.mixer.Sound(self.sound_effects['combat'][effect])
-            sound.set_volume(0.5)
-            sound.play()
-        elif effect in self.sound_effects:
-            sound = pygame.mixer.Sound(self.sound_effects[effect])
-            sound.set_volume(0.5)
-            sound.play()
-        else:
-            print(f"Sound effect '{effect}' not found.")
+    # def play_sound_effect(self, effect):
+    #     """Play a sound effect based on the effect name."""
+    #     try:
+    #         if effect in self.sound_effects['combat']:
+    #             sound = pygame.mixer.Sound(self.sound_effects['combat'][effect])
+    #             sound.set_volume(0.7)  # Slightly louder for combat sounds
+    #             sound.play()
+    #             print(f"Playing combat sound: {effect}")
+    #         elif effect in self.sound_effects:
+    #             sound = pygame.mixer.Sound(self.sound_effects[effect])
+    #             sound.set_volume(0.5)
+    #             sound.play()
+    #             print(f"Playing sound effect: {effect}")
+    #         else:
+    #             print(f"Sound effect '{effect}' not found.")
+    #     except pygame.error as e:
+    #         print(f"Error playing sound effect '{effect}': {e}")
+
+    def play_combat_sound(self, action_type):
+        """Play combat sounds based on specific fighter actions."""
+        combat_sound_map = {
+            'punch': 'atk 1',
+            'punch2': 'atk 2', 
+            'jump': 'jump',
+            'block': 'block',
+            'hit': 'hit',
+            'death': 'death'
+        }
+        
+        if action_type in combat_sound_map:
+            self.play_sound_effect(combat_sound_map[action_type])
     
     def play_credits_music(self):
         """Play the credits music."""

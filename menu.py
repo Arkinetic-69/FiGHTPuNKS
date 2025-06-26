@@ -27,6 +27,7 @@ class Menus:
         SETTINGS = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 100), 'SETTINGS', self.font, 'black', 'red')
         CREDITS = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 175), 'CREDITS', self.font, 'black', 'red')
         QUIT = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 250), 'QUIT', self.font, 'black', 'red')
+        self.game.sound.play_menu_music()
         
         bg_image = pygame.image.load('assets/images/menu/start_menu.2.png').convert()
         bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
@@ -121,6 +122,7 @@ class Menus:
                     
                     if PLAY.is_clicked():
                         try:
+                            pygame.mixer.music.stop()
                             duplicate = selected1 == selected2
                             self.game.load_fighters(selected1, selected2, duplicate)
                             self.game.run_game()

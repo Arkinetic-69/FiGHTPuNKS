@@ -2,6 +2,7 @@ import pygame, sys, random
 
 from settings import Settings
 from fighters import Fighter
+from sounds import Sounds
 from menu import Menus
 from debug import PgDebug
 
@@ -24,6 +25,9 @@ class FiGHTPuNKS:
         # Set up the display
         self.screen = pygame.display.get_surface()
 
+        # Initialize sound
+        self.sound = Sounds() 
+        
         # Set the background color of the screen
         self.bg_color = self.settings.bg_color
         
@@ -70,7 +74,8 @@ class FiGHTPuNKS:
         self.start_time = pygame.time.get_ticks()
         self.time = 60000
         self.death_time = 500
-        
+        self.sound.play_stage_music(random.choice(list(self.sound.stage_music.keys())))
+        # self.sound.play_combat_sound()
         
         while self.running:
             self.check_events()
@@ -78,6 +83,10 @@ class FiGHTPuNKS:
             self.dummy.update()
             self.update_screen()
             self.clock.tick(60)
+
+        pygame.mixer.music.stop()
+        self.sound.play_menu_music()
+
 
     def check_events(self):
         """Responds to keyboard, mouse, and joystick events"""
