@@ -17,6 +17,13 @@ class Settings:
 
         #
         self.bg_color = (128, 128, 128)
+        self.stages = []
+        for dirpath, dirname, filenames in os.walk('assets/images/stages'):
+            for filename in filenames:
+                path = os.path.join(dirpath, filename)
+                stage = pygame.image.load(path)
+                self.stages.append(stage)
+                
         num = random.choice(range(1,5))
         self.bg_image = pygame.image.load(f'assets/images/stages/stage{num}.png').convert_alpha()
 

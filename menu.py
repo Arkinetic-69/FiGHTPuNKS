@@ -32,8 +32,9 @@ class Menus:
         bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
         logo = pygame.transform.rotozoom(self.logo, 0, .8)
         logo_rect = logo.get_frect(center = (self.screen_rect.centerx, self.screen_rect.centery - 175))
+        running = True
         
-        while True:
+        while running:
             self.clock.tick(60)
             
             for event in pygame.event.get():
@@ -65,8 +66,9 @@ class Menus:
         
         bg_image = pygame.image.load('assets/images/menu/start_menu.png').convert()
         bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
+        running = True
 
-        while True:
+        while running:
             self.clock.tick(60)
             
             for event in pygame.event.get():
@@ -92,7 +94,9 @@ class Menus:
         bg_image = pygame.image.load('assets/images/menu/character_select_no_char.png').convert()
         bg_image = pygame.transform.scale(bg_image, (self.screen.width, self.screen.height))
         selected1 = selected2 = ''
-        while True:
+        running = True
+        
+        while running:
             # For debugging
             print(selected1, selected2)
             self.game.debug.debug(str(pygame.mouse.get_pos()))
@@ -103,6 +107,9 @@ class Menus:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     # Determine which fighter is selected
                     for fighter in [self.fighter1, self.fighter2, self.fighter3]:
@@ -113,9 +120,12 @@ class Menus:
                         selected2 =  clicked if clicked else selected2
                     
                     if PLAY.is_clicked():
-                        duplicate = selected1 == selected2
-                        self.game.load_fighters(selected1, selected2, duplicate)
-                        self.game.run_game()
+                        try:
+                            duplicate = selected1 == selected2
+                            self.game.load_fighters(selected1, selected2, duplicate)
+                            self.game.run_game()
+                        except:
+                            pass
               
             self.screen.blit(bg_image, (0,0))
 

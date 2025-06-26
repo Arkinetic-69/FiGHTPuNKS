@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, random
 
 from settings import Settings
 from fighters import Fighter
@@ -42,7 +42,10 @@ class FiGHTPuNKS:
 
     def run_game(self):
         """Start the main loop for the game"""
-        while True:
+        self.stage = self.settings.stages[random.randint(1, len(self.settings.stages) - 1)]
+        self.running = True
+        
+        while self.running:
             self.check_events()
             self.fighter.update()
             self.dummy.update()
@@ -165,7 +168,7 @@ class FiGHTPuNKS:
                 self.dummy.attack_2_start_time = pygame.time.get_ticks()
         # Escape to close
         elif event.key == pygame.K_ESCAPE:
-            self.menus.start_menu()
+            self.running = False
     
     def check_keyup_events(self,event):
         """Responds to keys being released"""
@@ -193,7 +196,7 @@ class FiGHTPuNKS:
     def update_screen(self):
         """Updates images on the screen and flip to new screen"""
         # Sets the background to default stage.
-        self.screen.blit(self.settings.bg_image, (0,0))
+        self.screen.blit(self.stage, (0,0))
         self.settings.bg_image = pygame.transform.scale(self.settings.bg_image,
                                                         (self.settings.screen_width, 
                                                          self.settings.screen_height))
