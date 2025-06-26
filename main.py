@@ -15,6 +15,9 @@ class FiGHTPuNKS:
         """Initializes the game and creates game resources."""
         pygame.init()
         self.clock = pygame.time.Clock()
+        self.settings = Settings() # Calls settings.py
+        self.sounds = Sounds() # Calls sounds.py
+        self.timer_font = pygame.Font('assets/fonts/NIRVANA.TTF', 100)
         self.settings = Settings() # This should initialize display
         
         # Set up the display (after settings)
