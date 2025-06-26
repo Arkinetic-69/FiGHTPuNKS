@@ -1,6 +1,7 @@
 import pygame, sys, random
 
 from settings import Settings
+from sounds import Sounds
 from fighters import Fighter
 from menu import Menus
 from debug import PgDebug
@@ -15,6 +16,7 @@ class FiGHTPuNKS:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings() # Calls settings.py
+        self.sounds = Sounds() # Calls sounds.py
         
         # For debugging
         self.debug = PgDebug()
@@ -42,8 +44,15 @@ class FiGHTPuNKS:
 
     def run_game(self):
         """Start the main loop for the game"""
+        # Stop menu music and start stage music
+        self.sounds.stop_music()
+        
         self.stage = self.settings.stages[random.randint(1, len(self.settings.stages) - 1)]
         self.running = True
+        
+        # Load stage music
+        stage_name = list(self.sounds.stage_music.keys())[0]  # Default to first stage
+        self.sounds.play_stage_music(stage_name)
         
         while self.running:
             self.check_events()
