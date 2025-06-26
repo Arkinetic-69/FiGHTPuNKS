@@ -96,6 +96,7 @@ class Fighter(pygame.sprite.Sprite):
         if self.hp <= 1:
             action = 'death'
             self.death = pygame.time.get_ticks()
+            self.game.sound.play_combat_sound('death')
         
         if not self.is_player_1:
             self.animate(action)
@@ -153,6 +154,7 @@ class Fighter(pygame.sprite.Sprite):
                     if self.attack_1_hitbox_rect.colliderect(self.game.dummy.rect):
                         print('hit dummy')
                         self.game.dummy.hp -= .8
+                        self.game.sound.play_combat_sound('hit')
             else:
                 # Attack 1 duration ended
                 self.is_attacking_1 = False
@@ -178,6 +180,8 @@ class Fighter(pygame.sprite.Sprite):
                     if self.attack_2_hitbox_rect.colliderect(self.game.dummy.rect):
                         print('hit dummy')
                         self.game.dummy.hp -= .5
+                        self.game.sound.play_combat_sound('hit')
+                        
             else:
                 # Attack 2 duration ended
                 self.is_attacking_2 = False

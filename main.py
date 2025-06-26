@@ -143,6 +143,7 @@ class FiGHTPuNKS:
 
         elif event.key == pygame.K_w: # Jump control
             self.fighter.jumping = True
+            self.sound.play_combat_sound('jump')
 
         # Player 1 attack
         elif event.key == pygame.K_x:
@@ -150,12 +151,14 @@ class FiGHTPuNKS:
                 self.fighter.attack_1 = True
                 self.fighter.is_attacking_1 = True
                 self.fighter.attack_1_start_time = pygame.time.get_ticks()
+                self.sound.play_combat_sound('atk 1')
 
         elif event.key == pygame.K_c:
             if not self.fighter.is_attacking_2:
                 self.fighter.attack_2 = True
                 self.fighter.is_attacking_2 = True
                 self.fighter.attack_2_start_time = pygame.time.get_ticks()
+                self.sound.play_combat_sound('atk 2')
                 
         elif event.key == pygame.K_m:
             if not self.dummy.is_attacking_1:
