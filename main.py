@@ -69,12 +69,7 @@ class FiGHTPuNKS:
                 self.check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self.check_keyup_events(event)
-            # elif event.type == pygame.MOUSEBUTTONDOWN:
-            #     mouse_pos = pygame.mouse.get_pos()
-            #     for button in self.menu_sprites.sprites():
-            #         if button.rect.collidepoint(mouse_pos):
-            #             button.clicked()
-
+                
             # Joystick events
             elif event.type == pygame.JOYBUTTONDOWN:
                 self.check_keydown_events(event)
@@ -125,6 +120,18 @@ class FiGHTPuNKS:
                 self.fighter.attack_2 = True
                 self.fighter.is_attacking_2 = True
                 self.fighter.attack_2_start_time = pygame.time.get_ticks()
+                
+        elif event.key == pygame.K_m:
+            if not self.dummy.is_attacking_1:
+                self.dummy.attack_1 = True
+                self.dummy.is_attacking_1 = True
+                self.dummy.attack_1_start_time = pygame.time.get_ticks()
+
+        elif event.key == pygame.K_n:
+            if not self.dummy.is_attacking_2:
+                self.dummy.attack_2 = True
+                self.dummy.is_attacking_2 = True
+                self.dummy.attack_2_start_time = pygame.time.get_ticks()
                 
         # Player 2 Movement
         elif event.key == pygame.K_l:
