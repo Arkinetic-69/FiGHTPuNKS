@@ -1,5 +1,7 @@
 import pygame
 
+from menu import Menus
+
 """Handles the in-game sounds, ost, and sfx.
 This module contains the Sounds class, which manages the background music,
 sound effects, and other audio elements in the game."""
@@ -29,14 +31,20 @@ class Sounds:
             'victory': r'assets\audio\sfx\victory.m4a'
         }
         self.credits_music = r'assets\audio\music\OST\Space Cowboy.m4a'
-        self.load_sounds()
         
     def play_menu_music(self):
         """Play the main menu music."""
-        pygame.mixer.music.load(self.menu_music)
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)
-    
+        # Stop any currently playing music
+        pygame.mixer.music.stop()
+        
+        try:
+            pygame.mixer.music.load(self.menu_music)
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play(-1)  # -1 means loop indefinitely
+            print("Menu music started playing.")
+        except pygame.error as e:
+            print(f"Error loading menu music: {e}")
+
     def play_stage_music(self, stage):
         """Play the stage music based on the stage name."""
         if stage in self.stage_music:
@@ -64,3 +72,11 @@ class Sounds:
         pygame.mixer.music.load(self.credits_music)
         pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(-1)
+
+    def stop_music(self):
+        """Stop all music playback."""
+        pygame.mixer.music.stop()
+
+    def fade_out_music(self, fade_time=1000):
+        """Fade out the current music over specified time in milliseconds."""
+        pygame.mixer.music.fadeout(fade_time)

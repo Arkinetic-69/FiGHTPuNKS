@@ -22,6 +22,10 @@ class Menus:
         
 
     def start_menu(self):
+        """Display and handle the start menu."""
+        # Start playing menu music when entering the menu
+        self.game.sounds.play_menu_music()
+        
         # Buttons
         START = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 25), 'START', self.font, 'black', 'red')
         SETTINGS = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 100), 'SETTINGS', self.font, 'black', 'red')
