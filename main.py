@@ -268,6 +268,8 @@ if __name__ == '__main__':
     # Make game instance and run the game
     fp = FiGHTPuNKS()
     fp.run_game()
-
-# test msg
-#lalalalalaa
+# i was here - iloveallraces
+# holy clutch - kirbymolester
+# this truly is the 2016-17 Golden State Warriors - retardpenisballs
+# who did? God did. I love Ichika - Ichika Glazer
+# i was not here - lance cedrick reyes
