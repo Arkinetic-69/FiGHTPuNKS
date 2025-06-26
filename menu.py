@@ -10,8 +10,6 @@ class Menus:
     """Class to handle the game menu and UI."""
     
     def __init__(self, game_instance):
-        # pygame.init()
-        # pygame.display.set_mode((1200, 700))
         self.game = game_instance
         self.screen = pygame.display.get_surface()
         self.screen_rect = self.screen.get_frect()
@@ -20,7 +18,6 @@ class Menus:
         
         self.logo = pygame.image.load('assets/images/menu/logo.png').convert_alpha()
         
-
     def start_menu(self):
         # Buttons
         START = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 25), 'START', self.font, 'black', 'red')

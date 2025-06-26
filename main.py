@@ -68,7 +68,7 @@ class FiGHTPuNKS:
         self.stage = self.settings.stages[random.randint(1, len(self.settings.stages) - 1)]
         self.running = True
         self.start_time = pygame.time.get_ticks()
-        self.time = 60000
+        self.timmnmde = 60000
         
         while self.running:
             self.check_events()
@@ -83,11 +83,6 @@ class FiGHTPuNKS:
             # Closes the game when you press X
             if event.type == pygame.QUIT:
                 sys.exit()
-                
-            #Joystick events
-            #elif event.type == pygame.JOYDEVICEADDED:
-                #self.joy = pygame.joystick.Joystick(event.device_index)
-                #self.joystick.append(self.joy)
 
             # Keyboard events
             elif event.type == pygame.KEYDOWN:
@@ -236,13 +231,13 @@ class FiGHTPuNKS:
         self.fighter.draw(self.screen)
         self.dummy.draw(self.screen)
         
+        # show healthbars
         self.show_hp(self.fighter, (50,50), True)
         self.show_hp(self.dummy, (self.screen.width - 50,50), False)
         
+        # show timer
         self.timer((self.screen.width/2, 75))
 
-        # self.screen.blit(self.fighter.idle[self.fighter.current_index], self.fighter.rect)
-        
         pygame.display.flip()
 
 if __name__ == '__main__':

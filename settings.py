@@ -23,11 +23,8 @@ class Settings:
                 path = os.path.join(dirpath, filename)
                 stage = pygame.image.load(path)
                 self.stages.append(stage)
-                
-        num = random.choice(range(1,5))
-        self.bg_image = pygame.image.load(f'assets/images/stages/stage{num}.png').convert_alpha()
 
-        # Kevin's Settings
+        # Fighter's Settings
         self.fighter_speed = 15.0
         self.fighter_vel_y = 40.0
         self.fighter_gravity = 5.0
