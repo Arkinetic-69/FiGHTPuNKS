@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from settings import Settings
 
 
@@ -16,19 +16,21 @@ class Fighter(pygame.sprite.Sprite):
         self.screen = pygame.display.get_surface()
         self.name = fighter
         self.inverted = is_inverted
+        self.hp = 100
         
         # For menu purposes
         self.selector = select
 
         # Load Kevin's sprite and attributes
+        self.action = 'idle'
+        self.current_anim_index = 0
         self.is_player_1 = is_player_1
-        self.idle = self.settings.fighters[fighter]['idle']
-        self.index_count = len(self.idle)
-        self.current_index = 0
+        self.anim = self.settings.fighters[fighter]['idle']
+        self.index_count = len(self.anim)
         self.anim_speed = .2
 
         # Load both Kevin and his rect
-        self.image = self.idle[0]
+        self.image = self.anim[0]
         self.rect = self.image.get_frect(midbottom = (x, y))
 
          # Kevin's attack hitboxes
@@ -84,14 +86,29 @@ class Fighter(pygame.sprite.Sprite):
 
     def update(self):
         """Updates Kevin based on movement flag"""
-          # Movement
+        # Movement
+        action = 'idle'
+        
         if self.moving_right:
+            action = 'walkr'
             self.rect.x += self.settings.fighter_speed
         if self.moving_left:
+            action = 'walkl'
             self.rect.x -= self.settings.fighter_speed
+
+        # Jumping
+        if self.jumping:
+            action = 'jump'
+            self.rect.y -= self.settings.fighter_vel_y
+            self.settings.fighter_vel_y -= self.settings.fighter_gravity
+
+            if self.settings.fighter_vel_y < -self.settings.fighter_jump:
+                self.jumping = False
+                self.settings.fighter_vel_y = self.settings.fighter_jump
 
         # Dashing
         if self.is_dashing:
+            action = 'dash'
             current_time = pygame.time.get_ticks()
             if current_time - self.dash_start_time < self.dash_duration:
                 # Apply dash movement
@@ -105,17 +122,9 @@ class Fighter(pygame.sprite.Sprite):
                 self.dash_right = False
                 self.dash_left = False 
 
-        # Jumping
-        if self.jumping:
-            self.rect.y -= self.settings.fighter_vel_y
-            self.settings.fighter_vel_y -= self.settings.fighter_gravity
-
-            if self.settings.fighter_vel_y < -self.settings.fighter_jump:
-                self.jumping = False
-                self.settings.fighter_vel_y = self.settings.fighter_jump
-
         # attack states
         if self.is_attacking_1:
+            action = 'attack1'
             current_time = pygame.time.get_ticks()
             if current_time - self.attack_1_start_time < self.attack_1_duration:
                 hitbox_x = self.rect.x + self.attack_1_hitbox_offset_x_right
@@ -131,6 +140,7 @@ class Fighter(pygame.sprite.Sprite):
 
         # === Handle Attack 2 state and hitbox ===
         if self.is_attacking_2:
+            action = 'attack2'
             current_time = pygame.time.get_ticks()
             if current_time - self.attack_2_start_time < self.attack_2_duration:
                 hitbox_x = self.rect.x + self.attack_2_hitbox_offset_x_right
@@ -156,18 +166,14 @@ class Fighter(pygame.sprite.Sprite):
         if self.rect.bottom > 650:
             self.rect.bottom = 650
         
+        self.animate(action)
+        # self.hp -= random.uniform(0,1)
 
-        self.animate()
-        # Sprite function
-        # if self.current_index < self.max_index:
-        #     self.current_index += 1
-        # else:
-        #     self.current_index = 0
 
     def menu_update(self, mouse_pos, animation_speed_scale, selected):
         """Update method used when using it in the character select"""
         # Animates the idle animation
-        self.animate(animation_speed_scale)
+        self.animate('idle', animation_speed_scale)
         
         image = self.image
         
@@ -181,10 +187,6 @@ class Fighter(pygame.sprite.Sprite):
         """For when the fighter is clicked on the menu"""
         if self.rect.collidepoint(mouse_pos):
             return self.name
-        
-    #def attack(self, surface):
-    #   """Kevin's attacks"""
-    #    pygame.draw.rect(surface, (255, 201, 24), self.attack_hitbox)
         
     def draw(self, surface):
         """Draws Kevin into the screen"""
@@ -203,10 +205,21 @@ class Fighter(pygame.sprite.Sprite):
             self.image = pygame.transform.invert(self.image)
         self.screen.blit(self.image, self.rect)
         
-    def animate(self, animation_speed_scale = 1):
+    def animate(self, action, animation_speed_scale = 1):
         """ sprite animation """
-        self.current_index += self.anim_speed * animation_speed_scale
-        self.image = self.idle[int(self.current_index) % self.index_count]
-        if not self.is_player_1:
-            self.image = pygame.transform.flip(self.image, True, False)
-        
+        # Continue animation if action is still the same
+        if action == self.action:
+            self.current_anim_index += self.anim_speed * animation_speed_scale
+            self.image = self.anim[int(self.current_anim_index) % self.index_count]
+            if not self.is_player_1:
+                self.image = pygame.transform.flip(self.image, True, False)
+        # Reset animation value and replace action
+        else:
+            self.action = action
+            self.anim = self.settings.fighters[self.name][action]
+            self.current_anim_index = 0
+            self.index_count = len(self.settings.fighters[self.name][action])
+            self.image = self.anim[int(self.current_anim_index) % self.index_count]
+            if not self.is_player_1:
+                self.image = pygame.transform.flip(self.image, True, False)
+
