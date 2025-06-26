@@ -12,11 +12,12 @@ class Sounds:
     def __init__(self):
         """Initialize the sound system."""
         pygame.mixer.init()
-        self.menu_music = r'assets\audio\music\OST\main menu\Oddysey.m4a'
+        self.menu_music = r'assets\audio\music\OST\main menu\Oddysey.mp3'
         self.stage_music = {
-            'stage1': r'assets\audio\music\OST\stages\Enemy State.m4a',
-            'stage2': r'assets\audio\music\OST\stages\Nano-angstrom.m4a',
-            'stage3': r'assets\audio\music\OST\stages\!!.m4a',
+            'stage1': r'assets\audio\music\OST\stages\!!.mp3',
+            'stage2': r'assets\audio\music\OST\stages\Space Cowboys.mp3',
+            'stage3': r'assets\audio\music\OST\stages\Nano-angstrom.mp3',
+            'stage4': r'assets\audio\music\OST\stages\Enemy State.mp3',
         }
         self.sound_effects = {
             'combat':{'atk 1': r'assets\audio\sfx\hit.wav', 
@@ -28,9 +29,8 @@ class Sounds:
              'death': r'assets\audio\sfx\death.wav'
             },
             'button': r'assets\audio\sfx\button_click.wav',
-            'victory': r'assets\audio\sfx\victory.m4a'
+            'victory': r'assets\audio\sfx\victory.mp3'
         }
-        self.credits_music = r'assets\audio\music\OST\Space Cowboy.m4a'
         
     def play_menu_music(self):
         """Play the main menu music."""
@@ -47,12 +47,31 @@ class Sounds:
 
     def play_stage_music(self, stage):
         """Play the stage music based on the stage name."""
-        if stage in self.stage_music:
-            pygame.mixer.music.load(self.stage_music[stage])
-            pygame.mixer.music.set_volume(0.5)
-            pygame.mixer.music.play(-1)
+        # Stop any currently playing music
+        pygame.mixer.music.stop()
+        
+        # Map of valid stages
+        valid_stages = ['stage1', 'stage2', 'stage3', 'stage4']
+        
+        if stage in valid_stages and stage in self.stage_music:
+            try:
+                pygame.mixer.music.load(self.stage_music[stage])
+                pygame.mixer.music.set_volume(0.5)
+                pygame.mixer.music.play(-1)  # -1 means loop indefinitely
+                print(f"Playing {stage} music: {self.stage_music[stage]}")
+            except pygame.error as e:
+                print(f"Error loading stage music for '{stage}': {e}")
         else:
-            print(f"Stage music for '{stage}' not found.")
+            print(f"Stage music for '{stage}' not found or invalid stage.")
+            # Fallback to stage1 music if available
+            if 'stage1' in self.stage_music:
+                try:
+                    pygame.mixer.music.load(self.stage_music['stage1'])
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play(-1)
+                    print("Playing fallback stage1 music.")
+                except pygame.error as e:
+                    print(f"Error loading fallback music: {e}")
     
     def play_sound_effect(self, effect):
         """Play a sound effect based on the effect name."""
@@ -67,12 +86,6 @@ class Sounds:
         else:
             print(f"Sound effect '{effect}' not found.")
     
-    def play_credits_music(self):
-        """Play the credits music."""
-        pygame.mixer.music.load(self.credits_music)
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)
-
     def stop_music(self):
         """Stop all music playback."""
         pygame.mixer.music.stop()

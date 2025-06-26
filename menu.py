@@ -156,6 +156,7 @@ class Menus:
         self.fighter6 = Fighter(self.game, 1078, 400, 'Xiuhcoatl', False, 1)
 
     def pause_menu(self):
+        """Display pause menu and handle pause logic."""
         CONTINUE = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 100), 'CONTINUE', self.font, 'white', 'red')
         SETTINGS = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 175), 'SETTINGS', self.font, 'white', 'red')
         QUIT = Button(None, (self.screen_rect.centerx, self.screen_rect.centery + 250), 'EXIT', self.font, 'white', 'red')
