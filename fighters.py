@@ -149,6 +149,13 @@ class Fighter(pygame.sprite.Sprite):
             self.rect.left = 0
         if self.rect.right > self.settings.screen_width:
             self.rect.right = self.settings.screen_width
+        
+        # falling
+        if self.rect.bottom < 650:
+            self.rect.y -= -5
+        if self.rect.bottom > 650:
+            self.rect.bottom = 650
+        
 
         self.animate()
         # Sprite function
