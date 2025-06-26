@@ -207,36 +207,6 @@ class Fighter(pygame.sprite.Sprite):
         
     def animate(self, action, animation_speed_scale = 1):
         """ sprite animation """
-<<<<<<< HEAD
-        self.current_index += self.anim_speed * animation_speed_scale
-        self.image = self.idle[int(self.current_index) % self.index_count]
-        if not self.is_player_1:
-            self.image = pygame.transform.flip(self.image, True, False)
-    
-    def attack_1_method(self):
-        """Handle attack 1 logic."""
-        # Play attack sound effect
-        self.game.sounds.play_sound_effect('atk 1')
-        # ...existing attack code...
-    
-    def attack_2_method(self):
-        """Handle attack 2 logic."""
-        # Play attack sound effect
-        self.game.sounds.play_sound_effect('atk 2')
-        # ...existing attack code...
-    
-    def jump_method(self):
-        """Handle jump logic."""
-        # Play jump sound effect
-        self.game.sounds.play_sound_effect('jump')
-        # ...existing jump code...
-    
-    def take_damage(self):
-        """Handle taking damage."""
-        # Play hit sound effect
-        self.game.sounds.play_sound_effect('hit')
-        # ...existing damage code...
-=======
         # Continue animation if action is still the same
         if action == self.action:
             self.current_anim_index += self.anim_speed * animation_speed_scale
@@ -252,5 +222,3 @@ class Fighter(pygame.sprite.Sprite):
             self.image = self.anim[int(self.current_anim_index) % self.index_count]
             if not self.is_player_1:
                 self.image = pygame.transform.flip(self.image, True, False)
->>>>>>> 18a7c57318e7e1ab19c1cc1fdd0a198fb66d0a87
-
