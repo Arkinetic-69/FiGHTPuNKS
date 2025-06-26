@@ -15,6 +15,7 @@ class FiGHTPuNKS:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings() # Calls settings.py
+        self.timer_font = pygame.Font('assets/fonts/NIRVANA.TTF', 100)
         
         # For debugging
         self.debug = PgDebug()
@@ -49,11 +50,25 @@ class FiGHTPuNKS:
             
         surf.fill('red')
         self.screen.blit(surf, surf_rect)
+        
+    def timer(self, pos):
+        current_time = pygame.time.get_ticks()
+        timer = (self.time - (current_time - self.start_time)) / 1000
+        timer = int(timer)
+        surf = self.timer_font.render(str(timer), True, 'silver')
+        rect = surf.get_frect(center = pos)
+        
+        self.screen.blit(surf, rect)
 
+        if timer <= 0:
+            self.running = False
+        
     def run_game(self):
         """Start the main loop for the game"""
         self.stage = self.settings.stages[random.randint(1, len(self.settings.stages) - 1)]
         self.running = True
+        self.start_time = pygame.time.get_ticks()
+        self.time = 60000
         
         while self.running:
             self.check_events()
@@ -223,6 +238,8 @@ class FiGHTPuNKS:
         
         self.show_hp(self.fighter, (50,50), True)
         self.show_hp(self.dummy, (self.screen.width - 50,50), False)
+        
+        self.timer((self.screen.width/2, 75))
 
         # self.screen.blit(self.fighter.idle[self.fighter.current_index], self.fighter.rect)
         
