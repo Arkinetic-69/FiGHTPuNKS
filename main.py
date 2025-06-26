@@ -44,7 +44,29 @@ class FiGHTPuNKS:
                                name1, True, ) # Calls Kevin in fighter.py
         self.dummy = Fighter(self, (self.screen.width / 5) * 4, 650,
                              name2, False, is_inverted=invert) # Calls Test Dummy
+        
+    def show_hp(self, fighter, pos, is_player_1):
+        surf = pygame.Surface((fighter.hp * 5, 50))
+        if is_player_1:
+            surf_rect = surf.get_frect(topleft = pos)
+        else:
+            surf_rect = surf.get_frect(topright = pos)
+            
+        surf.fill('red')
+        self.screen.blit(surf, surf_rect)
+        
+    def timer(self, pos):
+        current_time = pygame.time.get_ticks()
+        timer = (self.time - (current_time - self.start_time)) / 1000
+        timer = int(timer)
+        surf = self.timer_font.render(str(timer), True, 'silver')
+        rect = surf.get_frect(center = pos)
+        
+        self.screen.blit(surf, rect)
 
+        if timer <= 0:
+            self.running = False
+        
     def run_game(self):
         """Start the main loop for the game"""
         # Stop menu music and start stage music
@@ -223,6 +245,11 @@ class FiGHTPuNKS:
         # Draws the fighter on the screen
         self.fighter.draw(self.screen)
         self.dummy.draw(self.screen)
+        
+        self.show_hp(self.fighter, (50,50), True)
+        self.show_hp(self.dummy, (self.screen.width - 50,50), False)
+        
+        self.timer((self.screen.width/2, 75))
 
         # self.screen.blit(self.fighter.idle[self.fighter.current_index], self.fighter.rect)
         
@@ -234,4 +261,4 @@ if __name__ == '__main__':
     fp.run_game()
 
 # test msg
-#lalalalala
+#lalalalalaa
